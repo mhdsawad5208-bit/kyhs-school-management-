@@ -153,6 +153,13 @@ main{padding:22px;max-width:1280px;width:100%;margin:0 auto}
 .fin-tile strong{font-size:16px;color:var(--text)}
 .fin-tile span{font-size:12.5px;color:var(--muted)}
 
+/* Multi-class selector pills in Fee Structure */
+.class-chip-grid{display:flex;flex-wrap:wrap;gap:7px;padding:10px;background:#f8fafc;border:1px solid #cbd5e1;border-radius:10px}
+.class-chip{display:inline-flex;align-items:center;gap:5px;padding:5px 10px;background:#fff;border:1px solid #cbd5e1;border-radius:7px;font-size:12.5px;font-weight:600;cursor:pointer;user-select:none;transition:.15s}
+.class-chip:hover{border-color:#93c5fd;background:#eff6ff}
+.class-chip input{margin:0;transform:scale(1.05)}
+.struct-summary-bar{display:flex;flex-wrap:wrap;gap:12px;align-items:center;justify-content:space-between;background:#f0fdf4;border:1px solid #bbf7d0;padding:10px 14px;border-radius:10px;margin-bottom:12px;font-size:13.5px;color:#166534}
+
 /* Cards & Grids */
 .stats-3{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:18px}
 .dash-mid{display:grid;grid-template-columns:1.3fr 1fr 1fr;gap:16px;margin-bottom:18px}
@@ -432,7 +439,7 @@ header h2{
 #loginScreen::before{background:linear-gradient(90deg,rgba(10,25,16,.12) 0%,rgba(10,25,16,.20) 48%,rgba(10,25,16,.48) 100%);}
 .login-box{margin-left:clamp(0px,3vw,36px);margin-right:auto;max-width:410px;}
 
-/* Main module navigation with clear icon tiles, similar to the delete action icon. */
+/* Main module navigation with clear icon tiles */
 #sideNav{gap:7px;padding:16px 11px;}
 .nav-btn{min-height:46px;padding:8px 12px;gap:12px;border:1px solid transparent;color:#e5eee6;}
 .nav-icon{width:30px;height:30px;flex:0 0 30px;display:grid;place-items:center;border-radius:9px;background:rgba(255,255,255,.12);font-size:17px;line-height:1;}
@@ -443,7 +450,6 @@ header h2{
 .nav-btn.active .nav-icon{background:#a9dba2;color:#214b2b;}
 @media(max-width:700px){#loginScreen{justify-content:center}.login-box{margin:0;}}
 
-
 /* LOGIN SCREEN UPDATE: transparent panel, clear campus photo, right-side placement */
 #loginScreen{
   justify-content:flex-end !important;
@@ -453,7 +459,6 @@ header h2{
   background-size:cover !important;
 }
 #loginScreen::before{
-  /* Very light overlay only; the school photograph remains sharp and visible. */
   background:rgba(10,20,15,.12) !important;
 }
 #loginScreen .login-box{
@@ -504,7 +509,6 @@ header h2{
     background:rgba(255,255,255,.42) !important;
   }
 }
-
 </style>
 </head>
 <body>
@@ -512,7 +516,6 @@ header h2{
 <!-- LOGIN SCREEN -->
 <section id="loginScreen">
   <div class="login-box">
-    <!-- Photo is used as the full-page background; no duplicate photo inside login card. -->
     <img id="loginSchoolImg" src="school.jpg" alt="" aria-hidden="true" style="display:none">
     <input id="loginPhotoPicker" type="file" accept="image/*" style="display:none">
 
@@ -706,14 +709,13 @@ header h2{
         </div>
       </section>
 
-      <!-- 2B. SEARCH STUDENTS (ONLY SELECTED STUDENT DETAILS + PHOTO EDIT) -->
+      <!-- 2B. SEARCH STUDENTS -->
       <section id="view-search-students" class="view">
         <div class="tab-back-bar no-print">
           <button type="button" class="back-arrow-btn" onclick="handleSearchStudentBack()">← Back</button>
           <span style="font-size:13px;font-weight:600;color:var(--muted)">🔎 Search Students</span>
         </div>
 
-        <!-- Directory Search (Shown ONLY before picking a student) -->
         <div id="searchStudentListBlock" class="card no-print">
           <h3>🔎 Search Students</h3>
           <div class="toolbar">
@@ -726,7 +728,6 @@ header h2{
           <div id="searchStudentCards" class="student-search-grid"></div>
         </div>
 
-        <!-- Selected Student Details ONLY (No other students or balance lists below) -->
         <div id="fullStudentProfileBlock" style="display:none">
           <div class="profile-action-bar no-print">
             <div style="display:flex;gap:8px;flex-wrap:wrap">
@@ -934,7 +935,7 @@ header h2{
           </button>
           <button type="button" class="fin-tile" onclick="openFinanceSection('structure')">
             <strong>📋 Structure</strong>
-            <span>Set and edit class-wise fee structures</span>
+            <span>Set, edit & sync class-wise fee structures</span>
           </button>
           <button type="button" class="fin-tile" onclick="openFinanceSection('vehicle')">
             <strong>🚌 Bus Fee</strong>
@@ -1042,16 +1043,85 @@ header h2{
           </div>
         </div>
 
-        <!-- 2. STRUCTURE -->
+        <!-- 2. STRUCTURE (UPDATED WITH MULTI-CLASS, INSTALLMENTS, SYNC TO STUDENTS & SUMMARY) -->
         <div id="feeTab-structure" class="fee-panel">
           <div class="card no-print admin-only">
             <h3 id="structFormTitle">Set Class Fee Structure</h3>
             <div class="grid-4">
-              <div><label>Class *</label><select id="structClass"><option value="">Select class</option><option>LKG</option><option>UKG</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option><option>7</option><option>8</option><option>9</option><option>10</option><option>11</option><option>12</option></select></div>
-              <div><label>Period / Batch</label><input id="structPeriod" placeholder="e.g. June-March"></div>
-              <div><label>Fee Title / Category *</label><input id="structTitle" placeholder="e.g. Tuition Fee"></div>
-              <div><label>Fee Amount *</label><input id="structAmount" type="number" placeholder="e.g. 2800"></div>
+              <div>
+                <label>Fee Category / Title *</label>
+                <input id="structTitle" list="feeCategoryHints" placeholder="e.g. Tuition Fee / Admission Fee">
+                <datalist id="feeCategoryHints">
+                  <option value="Tuition Fee">
+                  <option value="Admission Fee">
+                  <option value="Special Fee">
+                  <option value="Exam Fee">
+                  <option value="Computer / Lab Fee">
+                  <option value="Uniform & Books">
+                </datalist>
+              </div>
+              <div>
+                <label>Installment / Term</label>
+                <select id="structInstallment">
+                  <option value="Annual">Annual (Full Year)</option>
+                  <option value="Term 1">Term 1</option>
+                  <option value="Term 2">Term 2</option>
+                  <option value="Term 3">Term 3</option>
+                  <option value="Monthly">Monthly</option>
+                </select>
+              </div>
+              <div>
+                <label>Period / Months</label>
+                <input id="structPeriod" placeholder="e.g. June-March">
+              </div>
+              <div>
+                <label>Fee Amount *</label>
+                <input id="structAmount" type="number" min="1" placeholder="e.g. 2800">
+              </div>
             </div>
+
+            <!-- Single Class dropdown when editing OR Multi-Class checkboxes when adding -->
+            <div id="structEditSingleClassBox" style="display:none;margin-top:12px;max-width:260px">
+              <label>Class *</label>
+              <select id="structClass">
+                <option value="">Select class</option>
+                <option>LKG</option><option>UKG</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option><option>7</option><option>8</option><option>9</option><option>10</option><option>11</option><option>12</option>
+              </select>
+            </div>
+
+            <div id="structMultiClassBox" style="margin-top:12px">
+              <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;flex-wrap:wrap;gap:6px">
+                <label style="margin:0">Select Classes * (Select one or multiple classes)</label>
+                <div style="display:flex;gap:6px">
+                  <button type="button" class="btn smallbtn sec" onclick="toggleStructClasses(true)">Select All</button>
+                  <button type="button" class="btn smallbtn sec" onclick="toggleStructClasses(false)">Clear All</button>
+                </div>
+              </div>
+              <div class="class-chip-grid" id="structClassCheckboxes">
+                <label class="class-chip"><input type="checkbox" value="LKG">LKG</label>
+                <label class="class-chip"><input type="checkbox" value="UKG">UKG</label>
+                <label class="class-chip"><input type="checkbox" value="1">Class 1</label>
+                <label class="class-chip"><input type="checkbox" value="2">Class 2</label>
+                <label class="class-chip"><input type="checkbox" value="3">Class 3</label>
+                <label class="class-chip"><input type="checkbox" value="4">Class 4</label>
+                <label class="class-chip"><input type="checkbox" value="5">Class 5</label>
+                <label class="class-chip"><input type="checkbox" value="6">Class 6</label>
+                <label class="class-chip"><input type="checkbox" value="7">Class 7</label>
+                <label class="class-chip"><input type="checkbox" value="8">Class 8</label>
+                <label class="class-chip"><input type="checkbox" value="9">Class 9</label>
+                <label class="class-chip"><input type="checkbox" value="10">Class 10</label>
+                <label class="class-chip"><input type="checkbox" value="11">Class 11</label>
+                <label class="class-chip"><input type="checkbox" value="12">Class 12</label>
+              </div>
+            </div>
+
+            <div style="margin-top:12px">
+              <label style="display:inline-flex;align-items:center;cursor:pointer;font-weight:600;color:#1e293b">
+                <input type="checkbox" id="structAutoSyncStudents" checked>
+                <span>Apply / update this fee automatically for existing students in selected class(es)</span>
+              </label>
+            </div>
+
             <div class="actions">
               <button type="button" class="btn" id="saveStructBtn" onclick="saveFeeStructure()">Save Structure</button>
               <button type="button" class="btn sec" onclick="clearStructForm()">Clear</button>
@@ -1060,10 +1130,36 @@ header h2{
           </div>
 
           <div class="card">
-            <h3>Class-wise Fee Structure</h3>
+            <h3>
+              <span>Class-wise Fee Structure</span>
+              <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap" class="no-print">
+                <select id="structFilterClass" onchange="renderFeeStructures()" style="max-width:170px;padding:7px 10px;font-size:13px">
+                  <option value="">All Classes</option>
+                  <option>LKG</option><option>UKG</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option><option>7</option><option>8</option><option>9</option><option>10</option><option>11</option><option>12</option>
+                </select>
+                <button type="button" class="btn smallbtn teal admin-only" onclick="syncAllStructuresToStudents()">🔄 Sync All to Students</button>
+              </div>
+            </h3>
+
+            <div id="structSummaryBar" class="struct-summary-bar">
+              <span>Showing: <strong id="structSummaryLabel">All Classes</strong> (<span id="structSummaryCount">0</span> fee heads)</span>
+              <span>Total Structure Amount: <strong style="font-size:15px" id="structSummaryTotal">₹0</strong></span>
+            </div>
+
             <div class="tablewrap">
-              <table><thead><tr><th>Class</th><th>Period</th><th>Category / Title</th><th>Fee Amount</th><th class="no-print admin-only">Actions</th></tr></thead>
-              <tbody id="structRows"><tr><td colspan="5">No class fee structures added yet.</td></tr></tbody></table>
+              <table>
+                <thead>
+                  <tr>
+                    <th>Class</th>
+                    <th>Category / Title</th>
+                    <th>Installment / Term</th>
+                    <th>Period</th>
+                    <th>Fee Amount</th>
+                    <th class="no-print admin-only">Actions</th>
+                  </tr>
+                </thead>
+                <tbody id="structRows"><tr><td colspan="6">No class fee structures added yet.</td></tr></tbody>
+              </table>
             </div>
           </div>
         </div>
@@ -1330,7 +1426,7 @@ header h2{
   </div>
 </div>
 
-<!-- LOGOUT CONFIRMATION MODAL (YES / NO) -->
+<!-- LOGOUT CONFIRMATION MODAL -->
 <div id="logoutModal" class="modal-backdrop" onclick="if(event.target===this)closeLogoutConfirm()">
   <div class="modal-card">
     <h3 style="margin:0 0 8px">Logout Confirmation</h3>
@@ -1342,7 +1438,7 @@ header h2{
   </div>
 </div>
 
-<!-- FEE PAYMENT MODAL (DATE, BANK / CASH, REMARK) -->
+<!-- FEE PAYMENT MODAL -->
 <div id="payFeeModal" class="modal-backdrop" onclick="if(event.target===this)closePayFeeModal()">
   <div class="modal-card">
     <h3 style="margin:0 0 12px">Collect Fee Payment</h3>
@@ -1463,7 +1559,7 @@ if($('attDate')) $('attDate').value = todayISO;
 if($('newExamDate')) $('newExamDate').value = todayISO;
 if($('addFeeDate')) $('addFeeDate').value = todayISO;
 
-/* --- IMAGE FILE PICKERS (LOGIN BG, ADMISSION FORM, PROFILE PHOTO) --- */
+/* --- IMAGE FILE PICKERS --- */
 function compressImageFile(file, maxW, quality, callback){
   const reader = new FileReader();
   reader.onload = function(ev){
@@ -1517,13 +1613,6 @@ function applySchoolPhotoSource(dataOrUrl){
   }
 })();
 
-$('loginSetPhotoBtn')?.addEventListener('click', (e) => {
-  e.preventDefault();
-  e.stopPropagation();
-  const picker = $('loginPhotoPicker');
-  if(picker){ picker.value = ''; picker.click(); }
-});
-
 $('loginPhotoPicker')?.addEventListener('change', (e) => {
   const file = e.target.files?.[0];
   if(!file) return;
@@ -1534,15 +1623,13 @@ $('loginPhotoPicker')?.addEventListener('change', (e) => {
 });
 
 $('formPhotoPencilBtn')?.addEventListener('click', (e) => {
-  e.preventDefault();
-  e.stopPropagation();
+  e.preventDefault(); e.stopPropagation();
   const picker = $('studentPhoto');
   if(picker){ picker.value = ''; picker.click(); }
 });
 
 $('formPhotoSelectBtn')?.addEventListener('click', (e) => {
-  e.preventDefault();
-  e.stopPropagation();
+  e.preventDefault(); e.stopPropagation();
   const picker = $('studentPhoto');
   if(picker){ picker.value = ''; picker.click(); }
 });
@@ -1557,8 +1644,7 @@ $('studentPhoto')?.addEventListener('change', (e) => {
 });
 
 $('profilePhotoPencilBtn')?.addEventListener('click', (e) => {
-  e.preventDefault();
-  e.stopPropagation();
+  e.preventDefault(); e.stopPropagation();
   const picker = $('profilePhotoInput');
   if(picker){ picker.value = ''; picker.click(); }
 });
@@ -1593,7 +1679,7 @@ function showMsg(elId, msg, type){
   setTimeout(()=>{ if(el.textContent === msg) el.textContent = ''; }, 5000);
 }
 
-/* --- LOGOUT CONFIRMATION (YES / NO) --- */
+/* --- LOGOUT CONFIRMATION --- */
 window.openLogoutConfirm = function(){ $('logoutModal').classList.add('active'); };
 window.closeLogoutConfirm = function(){ $('logoutModal').classList.remove('active'); };
 window.confirmLogoutNow = function(){
@@ -1782,6 +1868,7 @@ function buildNavForRole(role){
     switchView('dashboard', nav.querySelector('.nav-btn'));
   }
 }
+
 window.backFromModule = function(){
   const dashBtn = [...document.querySelectorAll('#sideNav .nav-btn')].find(b => (b.querySelector('.nav-label')?.textContent || b.textContent).trim() === 'Dashboard');
   switchView('dashboard', dashBtn || null);
@@ -1881,6 +1968,7 @@ window.openFinanceSection = function(tab){
 
   if(tab === 'report') renderFeeReport();
   if(tab === 'collection') renderErpStudentWorkspace();
+  if(tab === 'structure') renderFeeStructures();
   if(tab === 'vehicle') populateBusRouteSelect();
   if(tab === 'settings') populateSettingsInputs();
 };
@@ -1991,7 +2079,11 @@ window.saveFeeSettings = async function(){
   }catch(e){ showMsg('setMsg', 'Error: ' + e.message, 'error'); }
 };
 
-/* --- FEE STRUCTURE --- */
+/* --- FEE STRUCTURE (MULTI-CLASS, INSTALLMENTS, SYNC TO STUDENTS & SUMMARY) --- */
+window.toggleStructClasses = function(checked){
+  document.querySelectorAll('#structClassCheckboxes input[type="checkbox"]').forEach(cb => { cb.checked = checked; });
+};
+
 async function loadFeeStructures(){
   try{
     const snap = await getDocs(collection(db, 'fee_structures'));
@@ -2001,62 +2093,205 @@ async function loadFeeStructures(){
   }catch(e){}
 }
 
+async function applyStructureRuleToExistingStudents(rule){
+  const classStudents = students.filter(s => String(s.className) === String(rule.className));
+  const fullTitle = rule.installment && rule.installment !== 'Annual'
+    ? `${rule.title} (${rule.installment})`
+    : rule.title;
+  let added = 0, updated = 0;
+
+  for(const st of classStudents){
+    const existingPending = fees.find(f =>
+      f.studentId === st.id &&
+      String(f.className) === String(rule.className) &&
+      f.status === 'Pending' &&
+      (String(f.title).toLowerCase() === fullTitle.toLowerCase() || String(f.title).toLowerCase() === String(rule.title).toLowerCase())
+    );
+    const alreadyPaid = fees.some(f =>
+      f.studentId === st.id &&
+      String(f.className) === String(rule.className) &&
+      f.status === 'Paid' &&
+      (String(f.title).toLowerCase() === fullTitle.toLowerCase() || String(f.title).toLowerCase() === String(rule.title).toLowerCase())
+    );
+
+    if(existingPending){
+      if(Number(existingPending.amount) !== Number(rule.amount) || existingPending.title !== fullTitle){
+        await updateDoc(doc(db, 'fees', existingPending.id), {
+          title: fullTitle,
+          amount: Number(rule.amount),
+          period: rule.period || feeSettings.batch || '2026-2027',
+          updatedAt: new Date().toISOString()
+        });
+        existingPending.title = fullTitle;
+        existingPending.amount = Number(rule.amount);
+        updated++;
+      }
+    } else if(!alreadyPaid){
+      const record = {
+        studentId: st.id,
+        studentName: st.name,
+        className: st.className,
+        division: st.division || '',
+        period: rule.period || feeSettings.batch || '2026-2027',
+        batch: feeSettings.batch || '2026-2027',
+        title: fullTitle,
+        isBus: /bus/i.test(fullTitle),
+        amount: Number(rule.amount),
+        status: 'Pending',
+        date: todayISO,
+        autoGenerated: true,
+        createdAt: new Date().toISOString()
+      };
+      const ref = await addDoc(collection(db, 'fees'), record);
+      fees.push({ id: ref.id, ...record });
+      added++;
+    }
+  }
+  return { added, updated };
+}
+
 window.saveFeeStructure = async function(){
-  const className = $('structClass').value;
-  const period = $('structPeriod').value.trim() || feeSettings.batch || '2026-2027';
   const title = $('structTitle').value.trim();
+  const installment = $('structInstallment').value || 'Annual';
+  const period = $('structPeriod').value.trim() || feeSettings.batch || '2026-2027';
   const amount = Number($('structAmount').value);
-  if(!className || !title || !amount || amount <= 0){ showMsg('structMsg', 'Class, Category/Title, Amount എന്നിവ നൽകുക.', 'error'); return; }
-  const payload = { className, period, title, amount, updatedAt: new Date().toISOString() };
+  const autoSync = $('structAutoSyncStudents')?.checked ?? true;
+
+  if(!title || !amount || amount <= 0){
+    showMsg('structMsg', 'Fee Category/Title, Amount എന്നിവ നൽകുക.', 'error');
+    return;
+  }
+
   try{
     $('saveStructBtn').disabled = true;
     if(editingStructId){
+      const className = $('structClass').value;
+      if(!className){ showMsg('structMsg', 'Class തിരഞ്ഞെടുക്കുക.', 'error'); return; }
+      const payload = { className, title, installment, period, amount, updatedAt: new Date().toISOString() };
       await updateDoc(doc(db, 'fee_structures', editingStructId), payload);
-      showMsg('structMsg', `Class ${className} Fee Structure updated!`, 'success');
+      let syncTxt = '';
+      if(autoSync){
+        await loadFees();
+        const res = await applyStructureRuleToExistingStudents(payload);
+        syncTxt = ` (${res.added} added, ${res.updated} updated for existing students)`;
+      }
+      showMsg('structMsg', `Class ${className} Fee Structure updated!${syncTxt}`, 'success');
     } else {
-      payload.createdAt = new Date().toISOString();
-      await addDoc(collection(db, 'fee_structures'), payload);
-      showMsg('structMsg', `Class ${className} Fee Structure added!`, 'success');
+      const selectedClasses = [...document.querySelectorAll('#structClassCheckboxes input[type="checkbox"]:checked')].map(cb => cb.value);
+      if(!selectedClasses.length){
+        showMsg('structMsg', 'കുറഞ്ഞത് ഒരു Class എങ്കിലും തിരഞ്ഞെടുക്കുക.', 'error');
+        return;
+      }
+      await loadFees();
+      let totalAdded = 0, totalUpdated = 0;
+      for(const cls of selectedClasses){
+        const payload = {
+          className: cls,
+          title,
+          installment,
+          period,
+          amount,
+          createdAt: new Date().toISOString(),
+          updatedAt: new Date().toISOString()
+        };
+        await addDoc(collection(db, 'fee_structures'), payload);
+        if(autoSync){
+          const res = await applyStructureRuleToExistingStudents(payload);
+          totalAdded += res.added;
+          totalUpdated += res.updated;
+        }
+      }
+      const syncTxt = autoSync ? ` • Existing students synced: ${totalAdded} added, ${totalUpdated} updated.` : '';
+      showMsg('structMsg', `${selectedClasses.length} class(es)-ന് Fee Structure സേവ് ചെയ്തു!${syncTxt}`, 'success');
     }
     clearStructForm(false);
-    await loadFeeStructures();
-  }catch(e){ showMsg('structMsg', 'Error: ' + e.message, 'error'); }
-  finally{ $('saveStructBtn').disabled = false; }
+    await loadAll();
+  }catch(e){
+    showMsg('structMsg', 'Error: ' + e.message, 'error');
+  }finally{
+    $('saveStructBtn').disabled = false;
+  }
+};
+
+window.syncSingleStructure = async function(id){
+  const item = feeStructures.find(x => x.id === id);
+  if(!item) return;
+  await loadFees();
+  const res = await applyStructureRuleToExistingStudents(item);
+  await loadAll();
+  showMsg('structMsg', `Class ${item.className} (${item.title}) synced: ${res.added} added, ${res.updated} updated.`, 'success');
+};
+
+window.syncAllStructuresToStudents = async function(){
+  if(!feeStructures.length){ showMsg('structMsg', 'Sync ചെയ്യാൻ Fee Structures ഒന്നും ഇല്ല.', 'error'); return; }
+  await loadFees();
+  let totalAdded = 0, totalUpdated = 0;
+  for(const rule of feeStructures){
+    const res = await applyStructureRuleToExistingStudents(rule);
+    totalAdded += res.added;
+    totalUpdated += res.updated;
+  }
+  await loadAll();
+  showMsg('structMsg', `All Fee Structures synced! (${totalAdded} added, ${totalUpdated} updated)`, 'success');
 };
 
 window.editFeeStructure = function(id){
   const item = feeStructures.find(x => x.id === id); if(!item) return;
   editingStructId = id;
   $('structFormTitle').textContent = 'Edit Class Fee Structure';
+  $('structEditSingleClassBox').style.display = 'block';
+  $('structMultiClassBox').style.display = 'none';
   $('structClass').value = item.className;
-  $('structPeriod').value = item.period || '';
   $('structTitle').value = item.title;
+  $('structInstallment').value = item.installment || 'Annual';
+  $('structPeriod').value = item.period || '';
   $('structAmount').value = item.amount;
   $('saveStructBtn').textContent = 'Update Structure';
+  window.scrollTo({top:0, behavior:'smooth'});
 };
 
 window.clearStructForm = function(clearM=true){
   editingStructId = null;
   $('structFormTitle').textContent = 'Set Class Fee Structure';
   $('saveStructBtn').textContent = 'Save Structure';
-  $('structClass').value = ''; $('structPeriod').value = ''; $('structTitle').value = ''; $('structAmount').value = '';
+  $('structEditSingleClassBox').style.display = 'none';
+  $('structMultiClassBox').style.display = 'block';
+  $('structClass').value = '';
+  $('structTitle').value = '';
+  $('structInstallment').value = 'Annual';
+  $('structPeriod').value = '';
+  $('structAmount').value = '';
+  toggleStructClasses(false);
   if(clearM) $('structMsg').textContent = '';
 };
 
-function renderFeeStructures(){
+window.renderFeeStructures = function(){
   const canEdit = activeSession?.role === 'admin' || activeSession?.role === 'office';
-  if(!feeStructures.length){ $('structRows').innerHTML = '<tr><td colspan="5">No class fee structures added yet.</td></tr>'; return; }
-  $('structRows').innerHTML = feeStructures.map(fs => `<tr>
+  const clsFilter = $('structFilterClass')?.value || '';
+  const filtered = feeStructures.filter(fs => !clsFilter || String(fs.className) === String(clsFilter));
+
+  const totalAmt = filtered.reduce((sum, fs) => sum + Number(fs.amount || 0), 0);
+  if($('structSummaryLabel')) $('structSummaryLabel').textContent = clsFilter ? `Class ${clsFilter}` : 'All Classes';
+  if($('structSummaryCount')) $('structSummaryCount').textContent = filtered.length;
+  if($('structSummaryTotal')) $('structSummaryTotal').textContent = fmtMoney(totalAmt);
+
+  if(!filtered.length){
+    $('structRows').innerHTML = '<tr><td colspan="6">No class fee structures found for this filter.</td></tr>';
+    return;
+  }
+  $('structRows').innerHTML = filtered.map(fs => `<tr>
     <td><strong>Class ${esc(fs.className)}</strong></td>
+    <td><strong>${esc(fs.title)}</strong></td>
+    <td><span class="pill blue">${esc(fs.installment || 'Annual')}</span></td>
     <td>${esc(fs.period || '-')}</td>
-    <td>${esc(fs.title)}</td>
     <td><strong>${fmtMoney(fs.amount)}</strong></td>
     <td class="no-print admin-only" style="${canEdit?'':'display:none'}">
+      <button type="button" class="btn smallbtn sec" title="Sync to Class Students" onclick="syncSingleStructure('${fs.id}')">🔄 Sync</button>
       <button type="button" class="iconbtn" title="Edit" onclick="editFeeStructure('${fs.id}')">✏️</button>
       <button type="button" class="iconbtn del" title="Delete" onclick="delDoc('fee_structures','${fs.id}')">🗑️</button>
     </td>
   </tr>`).join('');
-}
+};
 
 /* --- BUS FEE --- */
 async function loadBusRoutes(){
@@ -2161,13 +2396,20 @@ async function assignClassFeesToStudent(studentId, studentName, className){
   let addedCount = 0;
   const classRules = feeStructures.filter(fs => String(fs.className) === String(className));
   for(const rule of classRules){
-    const alreadyExists = fees.some(f => f.studentId === studentId && String(f.className) === String(className) && String(f.title).toLowerCase() === String(rule.title).toLowerCase());
+    const fullTitle = rule.installment && rule.installment !== 'Annual'
+      ? `${rule.title} (${rule.installment})`
+      : rule.title;
+    const alreadyExists = fees.some(f =>
+      f.studentId === studentId &&
+      String(f.className) === String(className) &&
+      String(f.title).toLowerCase() === fullTitle.toLowerCase()
+    );
     if(!alreadyExists){
       const record = {
         studentId, studentName, className,
         period: rule.period || feeSettings.batch || '2026-2027',
         batch: feeSettings.batch || '2026-2027',
-        title: rule.title, isBus: /bus/i.test(rule.title),
+        title: fullTitle, isBus: /bus/i.test(fullTitle),
         amount: Number(rule.amount),
         status: 'Pending', date: todayISO, autoGenerated: true, createdAt: new Date().toISOString()
       };
@@ -2236,7 +2478,7 @@ window.saveStudent = async function(){
   finally{ $('saveBtn').disabled = false; }
 };
 
-/* --- SEARCH STUDENTS TAB (ONLY SELECTED STUDENT DETAILS + PHOTO EDIT) --- */
+/* --- SEARCH STUDENTS TAB --- */
 window.renderSearchStudentsDirectory = function(){
   const wrap = $('searchStudentCards');
   if(!wrap) return;
