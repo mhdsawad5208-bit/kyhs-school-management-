@@ -59,46 +59,6 @@ body{margin:0;font-family:'Segoe UI',Arial,Helvetica,sans-serif;background:var(-
   overflow:hidden;
   box-shadow:0 20px 48px rgba(0,0,0,0.45);
 }
-.school-hero{
-  margin:0 -24px 16px;
-  height:165px;
-  position:relative;
-  background:#1d3557;
-  overflow:hidden;
-}
-.school-hero img{
-  width:100%;
-  height:100%;
-  object-fit:cover;
-  display:block;
-}
-.school-hero-caption{
-  position:absolute;
-  left:0;right:0;bottom:0;
-  padding:9px 14px;
-  background:linear-gradient(transparent,rgba(15,23,42,0.88));
-  color:#fff;
-  font-size:11.5px;
-  font-weight:600;
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  gap:8px;
-}
-.photo-pick-mini{
-  background:rgba(255,255,255,0.22);
-  border:1px solid rgba(255,255,255,0.55);
-  color:#fff;
-  padding:4px 9px;
-  border-radius:6px;
-  font-size:11px;
-  font-weight:600;
-  cursor:pointer;
-  position:relative;
-  z-index:5;
-}
-.photo-pick-mini:hover{background:rgba(255,255,255,0.35)}
-
 .login-head{text-align:center;margin-bottom:16px}
 .login-head h1{margin:0;font-size:21px;color:var(--text)}
 .login-head p{margin:4px 0 0;font-size:13px;color:var(--muted)}
@@ -146,19 +106,24 @@ main{padding:22px;max-width:1280px;width:100%;margin:0 auto}
 .back-arrow-btn{border:1px solid #cbd5e1;background:#f8fafc;color:var(--text);padding:7px 13px;border-radius:8px;font-size:13px;font-weight:700;cursor:pointer;display:inline-flex;align-items:center;gap:6px}
 .back-arrow-btn:hover{background:#eff6ff;border-color:#93c5fd;color:#1d4ed8}
 
-/* Finance Main Menu Cards */
-.finance-menu-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:18px}
-.fin-tile{background:#fff;border:1px solid var(--line);border-radius:14px;padding:20px;cursor:pointer;transition:.18s;box-shadow:0 2px 10px #0f172a06;display:flex;flex-direction:column;gap:8px;text-align:left}
-.fin-tile:hover{border-color:#93c5fd;background:#f8fafc;transform:translateY(-2px)}
-.fin-tile strong{font-size:16px;color:var(--text)}
-.fin-tile span{font-size:12.5px;color:var(--muted)}
-
-/* Multi-class selector pills in Fee Structure */
+/* Multi-class selector pills & Fee Structure Summary */
 .class-chip-grid{display:flex;flex-wrap:wrap;gap:7px;padding:10px;background:#f8fafc;border:1px solid #cbd5e1;border-radius:10px}
 .class-chip{display:inline-flex;align-items:center;gap:5px;padding:5px 10px;background:#fff;border:1px solid #cbd5e1;border-radius:7px;font-size:12.5px;font-weight:600;cursor:pointer;user-select:none;transition:.15s}
 .class-chip:hover{border-color:#93c5fd;background:#eff6ff}
 .class-chip input{margin:0;transform:scale(1.05)}
 .struct-summary-bar{display:flex;flex-wrap:wrap;gap:12px;align-items:center;justify-content:space-between;background:#f0fdf4;border:1px solid #bbf7d0;padding:10px 14px;border-radius:10px;margin-bottom:12px;font-size:13.5px;color:#166534}
+
+/* Student Fee Detail Sub-Sections (Due Fee, Paid Fee, Receipt, Siblings) */
+.fc-section-tabs{display:flex;gap:8px;flex-wrap:wrap;background:#f8fafc;border:1px solid var(--line);padding:8px;border-radius:11px;margin-bottom:14px}
+.fc-sec-btn{border:1px solid transparent;background:transparent;color:var(--muted);padding:8px 14px;border-radius:8px;font-size:13px;font-weight:700;cursor:pointer;display:inline-flex;align-items:center;gap:7px;transition:.15s}
+.fc-sec-btn:hover{background:#fff;color:var(--text)}
+.fc-sec-btn.active{background:#fff;color:#1e293b;border-color:#cbd5e1;box-shadow:0 2px 6px rgba(15,23,42,.06)}
+.fc-sec-count{background:#e2e8f0;color:#334155;padding:1px 7px;border-radius:999px;font-size:11px;font-weight:700}
+.fc-sec-btn.active .fc-sec-count{background:#dcfce7;color:#166534}
+.fc-subpanel{display:none}.fc-subpanel.active{display:block}
+
+.sibling-card{border:1px solid var(--line);background:#f8fafc;border-radius:12px;padding:13px;display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:10px}
+.sibling-card.current{border-color:#86efac;background:#f0fdf4}
 
 /* Cards & Grids */
 .stats-3{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:18px}
@@ -255,7 +220,6 @@ th{color:#475569;font-size:12px;background:#f8fafc;font-weight:600}
 .quick-grid{display:grid;grid-template-columns:1fr;gap:10px}
 .quick-btn{width:100%;justify-content:flex-start;padding:12px 14px;background:#f8fafc;border:1px solid var(--line);color:var(--text);font-weight:600}
 .quick-btn:hover{background:#eff6ff;border-color:#bfdbfe;color:#1d4ed8}
-.hint-box{background:#f0f9ff;border:1px solid #bae6fd;color:#0369a1;padding:10px 12px;border-radius:8px;font-size:12.5px;margin-bottom:12px}
 
 /* Search Students Directory Grid & Full Profile */
 .student-search-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:12px}
@@ -333,7 +297,6 @@ th{color:#475569;font-size:12px;background:#f8fafc;font-weight:600}
 .erp-summary-chips{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
 .due-badge{background:#fee2e2;color:#b91c1c;padding:6px 12px;border-radius:8px;font-weight:700;font-size:13px}
 .paid-badge{background:#dcfce7;color:#15803d;padding:6px 12px;border-radius:8px;font-weight:700;font-size:13px}
-.erp-toolbar{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;background:#eff6ff;border:1px solid #bfdbfe;padding:10px 14px;border-radius:10px;margin-bottom:12px;font-size:13px}
 
 /* Modals (Pay Fee Modal, Logout Confirm Modal, Receipt Modal) */
 .modal-backdrop{display:none;position:fixed;inset:0;background:#0f172a80;z-index:999;align-items:center;justify-content:center;padding:16px}
@@ -351,14 +314,14 @@ th{color:#475569;font-size:12px;background:#f8fafc;font-weight:600}
 .receipt-foot{display:flex;justify-content:space-between;align-items:flex-end;gap:16px;margin-top:14px;font-size:13px;flex-wrap:wrap}
 
 @media(max-width:980px){
-  .stats-3,.dash-mid,.dash-bot,.grid-4,.finance-menu-grid{grid-template-columns:1fr 1fr}
+  .stats-3,.dash-mid,.dash-bot,.grid-4{grid-template-columns:1fr 1fr}
   .erp-filter-bar{grid-template-columns:1fr 1fr}
 }
 @media(max-width:760px){
   aside{position:fixed;top:0;bottom:0;left:0;transform:translateX(-100%)}
   aside.open{transform:translateX(0)}
   .menu-toggle{display:inline-block}
-  .grid-2,.grid-3,.grid-4,.stats-3,.dash-mid,.dash-bot,.erp-filter-bar,.receipt-info-grid,.finance-menu-grid{grid-template-columns:1fr}
+  .grid-2,.grid-3,.grid-4,.stats-3,.dash-mid,.dash-bot,.erp-filter-bar,.receipt-info-grid{grid-template-columns:1fr}
   main{padding:14px}
 }
 @media(max-width:700px){
@@ -428,16 +391,10 @@ header h2{
 .card:nth-of-type(3n) h3{border-left-color:#78a9c7;background:#eff6fa;color:#31566d}
 .card:nth-of-type(3n + 1) h3{border-left-color:#d2a45b;background:#fbf6ec;color:#765523}
 .card:nth-of-type(3n + 2) h3{border-left-color:#8c9bc5;background:#f2f3fa;color:#424f7a}
-.fin-tile strong{color:#31583a}
 @media(max-width:700px){
   #loginScreen{justify-content:center;padding:16px;background-position:center}
   .login-box{margin:0;}
 }
-
-/* Login: keep the campus photo as the visible full-screen background only. */
-#loginScreen{justify-content:flex-start;background-position:center;background-size:cover;}
-#loginScreen::before{background:linear-gradient(90deg,rgba(10,25,16,.12) 0%,rgba(10,25,16,.20) 48%,rgba(10,25,16,.48) 100%);}
-.login-box{margin-left:clamp(0px,3vw,36px);margin-right:auto;max-width:410px;}
 
 /* Main module navigation with clear icon tiles */
 #sideNav{gap:7px;padding:16px 11px;}
@@ -448,7 +405,6 @@ header h2{
 .nav-btn:hover .nav-icon{background:#d7edcf;}
 .nav-btn.active{background:#c9edc3;color:#214b2b;border-left:4px solid #4f9b5d;padding-left:9px;}
 .nav-btn.active .nav-icon{background:#a9dba2;color:#214b2b;}
-@media(max-width:700px){#loginScreen{justify-content:center}.login-box{margin:0;}}
 
 /* LOGIN SCREEN UPDATE: transparent panel, clear campus photo, right-side placement */
 #loginScreen{
@@ -920,145 +876,69 @@ header h2{
         </div>
       </section>
 
-      <!-- 6. FINANCE -->
+      <!-- 6. FINANCE MODULE (5 SUB-TABS: Fee Category, Fee Structure, Fee Collection, Report, Settings) -->
       <section id="view-finance" class="view">
-        <div id="financeMainTabs" class="subtabs no-print">
-          <button type="button" class="subtab-btn" onclick="openFinanceSection('collection')">Fee Collection</button>
-          <button type="button" class="subtab-btn" onclick="openFinanceSection('structure')">Structure</button>
-          <button type="button" class="subtab-btn" onclick="openFinanceSection('vehicle')">Bus Fee</button>
+        <div class="tab-back-bar no-print">
+          <button type="button" class="back-arrow-btn" onclick="backFromModule()">← Back</button>
+          <span style="font-size:13px;font-weight:600;color:var(--muted)">Finance Management</span>
         </div>
 
-        <div id="financeHomeCards" class="finance-menu-grid no-print">
-          <button type="button" class="fin-tile" onclick="openFinanceSection('collection')">
-            <strong>💳 Fee Collection</strong>
-            <span>Search student, collect fees (Date, Bank/Cash, Remark) & print receipts</span>
-          </button>
-          <button type="button" class="fin-tile" onclick="openFinanceSection('structure')">
-            <strong>📋 Structure</strong>
-            <span>Set, edit & sync class-wise fee structures</span>
-          </button>
-          <button type="button" class="fin-tile" onclick="openFinanceSection('vehicle')">
-            <strong>🚌 Bus Fee</strong>
-            <span>Manage routes, stages, rates & class bus assignments</span>
-          </button>
+        <div id="financeSubTabs" class="subtabs no-print">
+          <button type="button" class="subtab-btn active" data-ftab="category" onclick="switchFinanceTab('category',this)">1. Fee Category</button>
+          <button type="button" class="subtab-btn" data-ftab="structure" onclick="switchFinanceTab('structure',this)">2. Fee Structure</button>
+          <button type="button" class="subtab-btn" data-ftab="collection" onclick="switchFinanceTab('collection',this)">3. Fee Collection</button>
+          <button type="button" class="subtab-btn" data-ftab="report" onclick="switchFinanceTab('report',this)">4. Report</button>
+          <button type="button" class="subtab-btn" data-ftab="settings" onclick="switchFinanceTab('settings',this)">5. Settings</button>
         </div>
 
-        <div id="financeSubBackBar" class="tab-back-bar no-print" style="display:none">
-          <button type="button" class="back-arrow-btn" onclick="backToFinanceRoot()">← Back</button>
-          <strong id="financeSubTitle" style="font-size:14px">Finance</strong>
-          <div style="display:flex;gap:8px">
-            <button type="button" class="btn smallbtn sec" onclick="openFinanceSection('report')">Due Report</button>
-            <button type="button" class="btn smallbtn sec" onclick="openFinanceSection('settings')">Settings</button>
-          </div>
-        </div>
-
-        <!-- 1. FEE COLLECTION -->
-        <div id="feeTab-collection" class="fee-panel">
-          <div class="card no-print">
-            <h3>Fee Collection</h3>
-            <div class="erp-filter-bar">
-              <div style="position:relative">
-                <label>Search Admission No., Name...</label>
-                <input id="erpSearchInput" placeholder="Type Admission No. or Student Name..." oninput="onErpSearchInput()" onfocus="onErpSearchInput()">
-                <div id="erpSearchDropdown" class="search-dropdown"></div>
+        <!-- TAB 1: FEE CATEGORY -->
+        <div id="feeTab-category" class="fee-panel active">
+          <div class="card no-print admin-only">
+            <h3 id="catFormTitle">Add Fee Category</h3>
+            <div class="grid-3">
+              <div>
+                <label>Category Name *</label>
+                <input id="catName" placeholder="e.g. Tuition Fee / Admission Fee / Special Fee">
               </div>
               <div>
-                <label>Class</label>
-                <select id="erpClassFilter" onchange="onErpFilterChange()">
-                  <option value="">All Classes</option>
-                  <option>LKG</option><option>UKG</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option><option>7</option><option>8</option><option>9</option><option>10</option><option>11</option><option>12</option>
-                </select>
+                <label>Description / Notes</label>
+                <input id="catDesc" placeholder="Optional details about this fee head">
               </div>
-              <div>
-                <label>Division</label>
-                <input id="erpDivFilter" placeholder="e.g. A" oninput="onErpFilterChange()">
-              </div>
-              <div>
-                <button type="button" class="btn sec" onclick="clearSelectedErpStudent()">Clear</button>
+              <div style="display:flex;align-items:flex-end;gap:8px">
+                <button type="button" class="btn" id="saveCatBtn" onclick="saveFeeCategory()">Save Category</button>
+                <button type="button" class="btn sec" onclick="clearCategoryForm()">Clear</button>
               </div>
             </div>
+            <div id="catMsg" class="msg"></div>
           </div>
 
-          <div class="card" id="erpWorkspaceCard">
-            <div id="erpEmptyState" class="empty-student-state">
-              <div class="empty-student-icon">!</div>
-              <div style="font-weight:700;font-size:15px;color:#334155">No Student Selected</div>
-              <div style="font-size:13px;margin-top:4px">Please search Admission No. or Name above to view fees.</div>
-            </div>
-
-            <div id="erpStudentPanel" style="display:none">
-              <div id="erpStudentBanner" class="erp-student-banner"></div>
-
-              <div class="erp-toolbar no-print">
-                <div style="display:flex;gap:14px;flex-wrap:wrap;align-items:center">
-                  <label style="display:inline-flex;align-items:center;margin:0;cursor:pointer"><input type="checkbox" id="fltDue" checked onchange="renderSelectedStudentFeeTable()">Due Fee</label>
-                  <label style="display:inline-flex;align-items:center;margin:0;cursor:pointer"><input type="checkbox" id="fltPaid" checked onchange="renderSelectedStudentFeeTable()">Paid Fee</label>
-                  <label style="display:inline-flex;align-items:center;margin:0;cursor:pointer"><input type="checkbox" id="fltBus" checked onchange="renderSelectedStudentFeeTable()">Bus</label>
-                </div>
-                <div style="display:flex;gap:8px;flex-wrap:wrap">
-                  <button type="button" class="btn teal smallbtn" onclick="openMultiFeeReceipt(true)">🧾 Fees Receipt (All Paid)</button>
-                  <button type="button" class="btn smallbtn" onclick="openMultiFeeReceipt(false)">🧾 Receipt (Selected Rows)</button>
-                </div>
-              </div>
-
-              <div class="tablewrap">
-                <table>
-                  <thead>
-                    <tr>
-                      <th class="no-print" style="width:36px"><input type="checkbox" id="selectAllStudentFees" onchange="toggleSelectAllStudentFees(this.checked)"></th>
-                      <th>Period</th>
-                      <th>Category</th>
-                      <th>Batch</th>
-                      <th>Fee Amt</th>
-                      <th>Status</th>
-                      <th>Receipt No.</th>
-                      <th>Mode / Date</th>
-                      <th>Remark</th>
-                      <th>Collected By</th>
-                      <th class="no-print">Pay / Bill</th>
-                    </tr>
-                  </thead>
-                  <tbody id="erpFeeRows"></tbody>
-                </table>
-              </div>
-
-              <div class="card no-print" style="margin-top:16px;margin-bottom:0;background:#f8fafc">
-                <h3 style="font-size:14px;margin-bottom:10px">Add Additional Fee for Selected Student</h3>
-                <div class="grid-4">
-                  <div><label>Period</label><input id="addFeePeriod" placeholder="e.g. July / June-March"></div>
-                  <div><label>Category / Fee Title *</label><input id="addFeeTitle" placeholder="e.g. Tuition Fee / Exam Fee"></div>
-                  <div><label>Amount *</label><input id="addFeeAmt" type="number" placeholder="e.g. 1400"></div>
-                  <div><label>Status</label><select id="addFeeStatus"><option value="Pending">Due (Pending)</option><option value="Paid">Paid</option></select></div>
-                  <div><label>Payment Date</label><input id="addFeeDate" type="date"></div>
-                  <div><label>Payment Mode</label><select id="addFeeMode"><option value="Cash">Cash</option><option value="Bank">Bank</option></select></div>
-                  <div style="grid-column:span 2"><label>Remark (Note)</label><input id="addFeeRemark" placeholder="Optional note / remark..."></div>
-                </div>
-                <div class="actions" style="margin-top:10px">
-                  <button type="button" class="btn smallbtn" onclick="addFeeForSelectedStudent(false)">Add Fee Row</button>
-                  <button type="button" class="btn smallbtn teal" onclick="addFeeForSelectedStudent(true)">Add & Open Receipt</button>
-                </div>
-                <div id="erpAddMsg" class="msg"></div>
-              </div>
+          <div class="card">
+            <h3>Fee Categories</h3>
+            <div class="tablewrap">
+              <table>
+                <thead>
+                  <tr>
+                    <th style="width:60px">#</th>
+                    <th>Fee Category Name</th>
+                    <th>Description</th>
+                    <th class="no-print admin-only">Actions</th>
+                  </tr>
+                </thead>
+                <tbody id="catRows"><tr><td colspan="4">Loading fee categories...</td></tr></tbody>
+              </table>
             </div>
           </div>
         </div>
 
-        <!-- 2. STRUCTURE (UPDATED WITH MULTI-CLASS, INSTALLMENTS, SYNC TO STUDENTS & SUMMARY) -->
+        <!-- TAB 2: FEE STRUCTURE -->
         <div id="feeTab-structure" class="fee-panel">
           <div class="card no-print admin-only">
             <h3 id="structFormTitle">Set Class Fee Structure</h3>
             <div class="grid-4">
               <div>
-                <label>Fee Category / Title *</label>
-                <input id="structTitle" list="feeCategoryHints" placeholder="e.g. Tuition Fee / Admission Fee">
-                <datalist id="feeCategoryHints">
-                  <option value="Tuition Fee">
-                  <option value="Admission Fee">
-                  <option value="Special Fee">
-                  <option value="Exam Fee">
-                  <option value="Computer / Lab Fee">
-                  <option value="Uniform & Books">
-                </datalist>
+                <label>Fee Category *</label>
+                <input id="structTitle" list="feeCategoryList" placeholder="Select or type category">
+                <datalist id="feeCategoryList"></datalist>
               </div>
               <div>
                 <label>Installment / Term</label>
@@ -1080,7 +960,6 @@ header h2{
               </div>
             </div>
 
-            <!-- Single Class dropdown when editing OR Multi-Class checkboxes when adding -->
             <div id="structEditSingleClassBox" style="display:none;margin-top:12px;max-width:260px">
               <label>Class *</label>
               <select id="structClass">
@@ -1151,7 +1030,7 @@ header h2{
                 <thead>
                   <tr>
                     <th>Class</th>
-                    <th>Category / Title</th>
+                    <th>Fee Category</th>
                     <th>Installment / Term</th>
                     <th>Period</th>
                     <th>Fee Amount</th>
@@ -1164,50 +1043,174 @@ header h2{
           </div>
         </div>
 
-        <!-- 3. BUS FEE -->
-        <div id="feeTab-vehicle" class="fee-panel">
-          <div class="card no-print admin-only">
-            <h3>Add Bus Route, Stage & Rate</h3>
-            <div class="grid-4">
-              <div><label>Bus Route *</label><input id="busRoute" placeholder="e.g. Route 1 - Town"></div>
-              <div><label>Bus Stage *</label><input id="busStage" placeholder="e.g. Junction / Stop"></div>
-              <div><label>Rate / Fare *</label><input id="busRate" type="number" placeholder="e.g. 800"></div>
-              <div style="display:flex;align-items:flex-end"><button type="button" class="btn" onclick="saveBusRoute()">Save Route</button></div>
+        <!-- TAB 3: FEE COLLECTION -->
+        <div id="feeTab-collection" class="fee-panel">
+          <div class="card no-print">
+            <h3>Fee Collection — Select Student</h3>
+            <div class="erp-filter-bar">
+              <div style="position:relative">
+                <label>Search Admission No., Student Name...</label>
+                <input id="erpSearchInput" placeholder="Type Admission No. or Student Name..." oninput="onErpSearchInput()" onfocus="onErpSearchInput()">
+                <div id="erpSearchDropdown" class="search-dropdown"></div>
+              </div>
+              <div>
+                <label>Class</label>
+                <select id="erpClassFilter" onchange="onErpFilterChange()">
+                  <option value="">All Classes</option>
+                  <option>LKG</option><option>UKG</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option><option>7</option><option>8</option><option>9</option><option>10</option><option>11</option><option>12</option>
+                </select>
+              </div>
+              <div>
+                <label>Division</label>
+                <input id="erpDivFilter" placeholder="e.g. A" oninput="onErpFilterChange()">
+              </div>
+              <div>
+                <button type="button" class="btn sec" onclick="clearSelectedErpStudent()">Clear</button>
+              </div>
             </div>
-            <div id="busMsg" class="msg"></div>
           </div>
 
-          <div class="card">
-            <h3>Saved Bus Routes & Stages</h3>
-            <div class="tablewrap">
-              <table><thead><tr><th>Route</th><th>Stage</th><th>Rate</th><th class="no-print admin-only">Action</th></tr></thead>
-              <tbody id="busRouteRows"><tr><td colspan="4">No bus routes added yet.</td></tr></tbody></table>
+          <div class="card" id="erpWorkspaceCard">
+            <div id="erpEmptyState" class="empty-student-state">
+              <div class="empty-student-icon">!</div>
+              <div style="font-weight:700;font-size:15px;color:#334155">No Student Selected</div>
+              <div style="font-size:13px;margin-top:4px">Search and select a student above to view Due Fee, Paid Fee, Receipts & Siblings.</div>
             </div>
-          </div>
 
-          <div class="card no-print admin-only">
-            <h3>Assign Bus Route & Rate by Class</h3>
-            <div class="grid-3">
-              <div><label>Select Class *</label><select id="assignBusClass"><option value="">Select class</option><option>LKG</option><option>UKG</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option><option>7</option><option>8</option><option>9</option><option>10</option><option>11</option><option>12</option></select></div>
-              <div><label>Select Route & Stage *</label><select id="assignBusRouteId"></select></div>
-              <div style="display:flex;align-items:flex-end"><button type="button" class="btn teal" onclick="assignBusToClass()">Assign to Class & Add Bus Fee</button></div>
-            </div>
-            <div id="assignBusMsg" class="msg"></div>
-          </div>
+            <div id="erpStudentPanel" style="display:none">
+              <div id="erpStudentBanner" class="erp-student-banner"></div>
 
-          <div class="card">
-            <h3>Class Bus Assignments</h3>
-            <div class="tablewrap">
-              <table><thead><tr><th>Class</th><th>Route</th><th>Stage</th><th>Rate</th><th>Students Count</th><th class="no-print admin-only">Action</th></tr></thead>
-              <tbody id="busAssignRows"><tr><td colspan="6">No class bus assignments yet.</td></tr></tbody></table>
+              <div class="fc-section-tabs no-print">
+                <button type="button" class="fc-sec-btn active" data-fcsec="due" onclick="switchFeeCollectionSection('due',this)">
+                  Due Fee <span class="fc-sec-count" id="fcDueCount">0</span>
+                </button>
+                <button type="button" class="fc-sec-btn" data-fcsec="paid" onclick="switchFeeCollectionSection('paid',this)">
+                  Paid Fee <span class="fc-sec-count" id="fcPaidCount">0</span>
+                </button>
+                <button type="button" class="fc-sec-btn" data-fcsec="receipt" onclick="switchFeeCollectionSection('receipt',this)">
+                  Receipt <span class="fc-sec-count" id="fcReceiptCount">0</span>
+                </button>
+                <button type="button" class="fc-sec-btn" data-fcsec="siblings" onclick="switchFeeCollectionSection('siblings',this)">
+                  Siblings <span class="fc-sec-count" id="fcSiblingCount">0</span>
+                </button>
+              </div>
+
+              <!-- 1. DUE FEE PANEL -->
+              <div id="fcPanel-due" class="fc-subpanel active">
+                <div class="tablewrap">
+                  <table>
+                    <thead>
+                      <tr>
+                        <th>Period</th>
+                        <th>Fee Category</th>
+                        <th>Batch</th>
+                        <th>Fee Amount</th>
+                        <th>Status</th>
+                        <th>Remark</th>
+                        <th class="no-print">Action</th>
+                      </tr>
+                    </thead>
+                    <tbody id="fcDueRows"></tbody>
+                  </table>
+                </div>
+
+                <div class="card no-print" style="margin-top:16px;margin-bottom:0;background:#f8fafc">
+                  <h3 style="font-size:14px;margin-bottom:10px">Add / Collect Fee for This Student</h3>
+                  <div class="grid-4">
+                    <div><label>Period</label><input id="addFeePeriod" placeholder="e.g. June-March"></div>
+                    <div>
+                      <label>Fee Category / Title *</label>
+                      <input id="addFeeTitle" list="feeCategoryList" placeholder="e.g. Tuition Fee">
+                    </div>
+                    <div><label>Amount *</label><input id="addFeeAmt" type="number" min="1" placeholder="e.g. 1400"></div>
+                    <div>
+                      <label>Status</label>
+                      <select id="addFeeStatus">
+                        <option value="Pending">Due (Pending)</option>
+                        <option value="Paid">Pay Now (Generate Receipt)</option>
+                      </select>
+                    </div>
+                    <div><label>Payment Date</label><input id="addFeeDate" type="date"></div>
+                    <div><label>Payment Mode</label><select id="addFeeMode"><option value="Cash">Cash</option><option value="Bank">Bank</option></select></div>
+                    <div style="grid-column:span 2"><label>Remark (Note)</label><input id="addFeeRemark" placeholder="Optional note / remark..."></div>
+                  </div>
+                  <div class="actions" style="margin-top:10px">
+                    <button type="button" class="btn smallbtn" onclick="addFeeForSelectedStudent(false)">Save Due Fee</button>
+                    <button type="button" class="btn smallbtn teal" onclick="addFeeForSelectedStudent(true)">Submit Payment & Generate Receipt</button>
+                  </div>
+                  <div id="erpAddMsg" class="msg"></div>
+                </div>
+              </div>
+
+              <!-- 2. PAID FEE PANEL -->
+              <div id="fcPanel-paid" class="fc-subpanel">
+                <div class="tablewrap">
+                  <table>
+                    <thead>
+                      <tr>
+                        <th>Period</th>
+                        <th>Fee Category</th>
+                        <th>Amount Paid</th>
+                        <th>Receipt No.</th>
+                        <th>Mode / Date</th>
+                        <th>Remark</th>
+                        <th>Collected By</th>
+                        <th class="no-print">Action</th>
+                      </tr>
+                    </thead>
+                    <tbody id="fcPaidRows"></tbody>
+                  </table>
+                </div>
+              </div>
+
+              <!-- 3. RECEIPT PANEL -->
+              <div id="fcPanel-receipt" class="fc-subpanel">
+                <div class="tablewrap">
+                  <table>
+                    <thead>
+                      <tr>
+                        <th>Receipt No.</th>
+                        <th>Bill Date</th>
+                        <th>Fee Particulars</th>
+                        <th>Amount</th>
+                        <th>Payment Mode</th>
+                        <th>Collected By</th>
+                        <th class="no-print">View / Print</th>
+                      </tr>
+                    </thead>
+                    <tbody id="fcReceiptRows"></tbody>
+                  </table>
+                </div>
+              </div>
+
+              <!-- 4. SIBLINGS PANEL -->
+              <div id="fcPanel-siblings" class="fc-subpanel">
+                <div id="fcSiblingsList"></div>
+
+                <div class="card no-print" style="margin-top:14px;margin-bottom:0;background:#f8fafc">
+                  <h3 style="font-size:14px;margin-bottom:10px">Select / Link Another Sibling Student</h3>
+                  <div class="grid-3">
+                    <div style="grid-column:span 2">
+                      <label>Choose Sibling from Student Directory</label>
+                      <select id="siblingSelectDropdown">
+                        <option value="">Select sibling student...</option>
+                      </select>
+                    </div>
+                    <div style="display:flex;align-items:flex-end;gap:8px">
+                      <button type="button" class="btn teal" onclick="linkAndOpenSibling()">Link & Manage Fee</button>
+                    </div>
+                  </div>
+                  <div id="siblingMsg" class="msg"></div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
 
-        <!-- 4. FEE & DUE REPORT -->
+        <!-- TAB 4: REPORT -->
         <div id="feeTab-report" class="fee-panel">
           <div class="card">
-            <h3>Due Report — All Fee Summary & Class-wise Due List</h3>
+            <h3>Fee & Due Report</h3>
             <div class="toolbar no-print">
               <select id="repClass" onchange="renderFeeReport()" style="max-width:170px">
                 <option value="">All classes</option>
@@ -1235,11 +1238,23 @@ header h2{
           </div>
         </div>
 
-        <!-- 5. SETTINGS -->
+        <!-- TAB 5: SETTINGS (FEE SETTINGS ONLY) -->
         <div id="feeTab-settings" class="fee-panel">
           <div class="card">
-            <h3>Receipt Number Sequence</h3>
+            <h3>Fee & Receipt Settings</h3>
             <div class="grid-3">
+              <div>
+                <label>School Name on Receipt</label>
+                <input id="setSchoolName" value="KYHSS ATHAVANAD">
+              </div>
+              <div>
+                <label>Academic Batch / Year</label>
+                <input id="setBatch" value="2026-2027">
+              </div>
+              <div>
+                <label>Currency Symbol</label>
+                <input id="setCurrency" value="₹" maxlength="5">
+              </div>
               <div>
                 <label>Next Receipt Number *</label>
                 <input id="setNextReceiptNo" type="number" min="1" value="1">
@@ -1248,38 +1263,16 @@ header h2{
                 <label>Receipt Prefix (Optional)</label>
                 <input id="setReceiptPrefix" placeholder="e.g. REC-">
               </div>
-              <div style="display:flex;align-items:flex-end">
-                <button type="button" class="btn teal" onclick="saveReceiptNumberSettings()">Save Receipt Number</button>
-              </div>
-            </div>
-            <div id="rcptNumMsg" class="msg"></div>
-          </div>
-
-          <div class="card">
-            <h3>Office Staff Login Credentials</h3>
-            <div class="grid-3">
-              <div><label>Office Staff Display Name *</label><input id="officeStaffName" placeholder="e.g. Office Accounts"></div>
-              <div><label>Office Staff Username *</label><input id="officeStaffUser" placeholder="e.g. office_staff"></div>
-              <div><label>Office Staff Password *</label><input id="officeStaffPass" type="text" placeholder="Password"></div>
-            </div>
-            <div class="actions"><button type="button" class="btn teal" onclick="saveOfficeStaffLogin()">Save Office Staff Login</button></div>
-            <div id="officeLoginMsg" class="msg"></div>
-          </div>
-
-          <div class="card">
-            <h3>Fee & Receipt Settings</h3>
-            <div class="grid-3">
-              <div><label>School Name on Receipt</label><input id="setSchoolName" value="KYHSS ATHAVANAD"></div>
-              <div><label>Academic Batch / Year</label><input id="setBatch" value="2026-2027"></div>
-              <div><label>Currency Symbol</label><input id="setCurrency" value="₹" maxlength="5"></div>
             </div>
             <div style="margin-top:14px">
               <label style="display:flex;align-items:center;cursor:pointer">
                 <input type="checkbox" id="setAutoAssign" checked>
-                <span>Auto-assign class fee & bus fee when adding a new student</span>
+                <span>Auto-assign class fee structure when adding a new student</span>
               </label>
             </div>
-            <div class="actions"><button type="button" class="btn" onclick="saveFeeSettings()">Save Settings</button></div>
+            <div class="actions">
+              <button type="button" class="btn teal" onclick="saveFeeSettings()">Save Fee Settings</button>
+            </div>
             <div id="setMsg" class="msg"></div>
           </div>
         </div>
@@ -1460,7 +1453,7 @@ header h2{
     </div>
     <div style="display:flex;justify-content:flex-end;gap:8px">
       <button type="button" class="btn sec" onclick="closePayFeeModal()">Cancel</button>
-      <button type="button" class="btn teal" id="confirmPayFeeBtn" onclick="confirmPayFeeModal()">Pay & Generate Bill</button>
+      <button type="button" class="btn teal" id="confirmPayFeeBtn" onclick="confirmPayFeeModal()">Submit Payment & Generate Receipt</button>
     </div>
   </div>
 </div>
@@ -1542,10 +1535,10 @@ const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
 let students = [], staffList = [], attendanceLogs = [], examsList = [], marks = [], subjectAllocs = [],
-    fees = [], feeStructures = [], busRoutes = [], busAssignments = [], timetable = [], notices = [];
+    fees = [], feeCategories = [], feeStructures = [], busRoutes = [], busAssignments = [], timetable = [], notices = [];
 let feeSettings = { schoolName: 'KYHSS ATHAVANAD', batch: '2026-2027', currency: '₹', autoAssign: true, nextReceiptNo: 1, receiptPrefix: '' };
 let officeStaffConfig = { name: 'Office Staff', username: '', password: '' };
-let editingStudentId = null, editingStructId = null, currentPhotoBase64 = '';
+let editingStudentId = null, editingStructId = null, editingCatId = null, currentPhotoBase64 = '';
 let manualHeaders = [], manualRowsData = [];
 let activeSession = null;
 let selectedErpStudentId = '';
@@ -1703,17 +1696,6 @@ async function allocateNextReceiptNumber(){
   if($('setNextReceiptNo')) $('setNextReceiptNo').value = feeSettings.nextReceiptNo;
   return formattedNo;
 }
-
-window.saveReceiptNumberSettings = async function(){
-  const nextNo = Math.max(1, Number($('setNextReceiptNo').value) || 1);
-  const prefix = $('setReceiptPrefix').value.trim();
-  feeSettings.nextReceiptNo = nextNo;
-  feeSettings.receiptPrefix = prefix;
-  try{
-    await setDoc(doc(db, 'fee_settings', 'default'), feeSettings);
-    showMsg('rcptNumMsg', `Next Receipt Number set to "${prefix}${nextNo}"!`, 'success');
-  }catch(e){ showMsg('rcptNumMsg', 'Error: ' + e.message, 'error'); }
-};
 
 /* --- LOGIN & ROLE PORTAL --- */
 window.switchRoleTab = function(role, btn){
@@ -1932,7 +1914,10 @@ window.switchView = function(name, btn){
   if(btn) btn.classList.add('active');
   $('pageTitle').textContent = btn ? (btn.querySelector('.nav-label')?.textContent || btn.textContent).trim() : name;
   $('sidebar')?.classList.remove('open');
-  if(name === 'finance') backToFinanceRoot();
+  if(name === 'finance'){
+    const firstBtn = document.querySelector('#financeSubTabs .subtab-btn[data-ftab="category"]');
+    switchFinanceTab('category', firstBtn);
+  }
   if(name === 'search-students'){
     if(activeProfileStudentId) openStudentFullProfile(activeProfileStudentId);
     else closeStudentFullProfile();
@@ -1941,35 +1926,18 @@ window.switchView = function(name, btn){
   if(name === 'parent-home') renderParentPortal();
 };
 
-/* --- FINANCE SECTION NAVIGATION --- */
-window.backToFinanceRoot = function(){
-  document.querySelectorAll('.fee-panel').forEach(p => p.classList.remove('active'));
-  document.querySelectorAll('#financeMainTabs .subtab-btn').forEach(b => b.classList.remove('active'));
-  if($('financeMainTabs')) $('financeMainTabs').style.display = 'flex';
-  if($('financeHomeCards')) $('financeHomeCards').style.display = 'grid';
-  if($('financeSubBackBar')) $('financeSubBackBar').style.display = 'none';
-};
-
-window.openFinanceSection = function(tab){
-  const titles = {
-    collection: 'Fee Collection',
-    structure: 'Structure',
-    vehicle: 'Bus Fee',
-    report: 'Fee & Due Report',
-    settings: 'Settings'
-  };
-  document.querySelectorAll('.fee-panel').forEach(p => p.classList.remove('active'));
+/* --- FINANCE SUB-TABS (1. Fee Category, 2. Fee Structure, 3. Fee Collection, 4. Report, 5. Settings) --- */
+window.switchFinanceTab = function(tab, btn){
+  document.querySelectorAll('#view-finance .fee-panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('#financeSubTabs .subtab-btn').forEach(b => b.classList.remove('active'));
   $('feeTab-' + tab)?.classList.add('active');
+  if(btn) btn.classList.add('active');
+  else document.querySelector(`#financeSubTabs .subtab-btn[data-ftab="${tab}"]`)?.classList.add('active');
 
-  if($('financeMainTabs')) $('financeMainTabs').style.display = 'none';
-  if($('financeHomeCards')) $('financeHomeCards').style.display = 'none';
-  if($('financeSubBackBar')) $('financeSubBackBar').style.display = 'flex';
-  if($('financeSubTitle')) $('financeSubTitle').textContent = titles[tab] || tab;
-
+  if(tab === 'category') renderFeeCategories();
+  if(tab === 'structure'){ populateCategoryDatalist(); renderFeeStructures(); }
+  if(tab === 'collection'){ populateCategoryDatalist(); renderErpStudentWorkspace(); }
   if(tab === 'report') renderFeeReport();
-  if(tab === 'collection') renderErpStudentWorkspace();
-  if(tab === 'structure') renderFeeStructures();
-  if(tab === 'vehicle') populateBusRouteSelect();
   if(tab === 'settings') populateSettingsInputs();
 };
 
@@ -2009,6 +1977,7 @@ async function loadAll(){
     loadFeeSettings(),
     loadStudents(),
     loadStaff(),
+    loadFeeCategories(),
     loadFeeStructures(),
     loadBusRoutes(),
     loadBusAssignments(),
@@ -2020,40 +1989,25 @@ async function loadAll(){
     loadTimetable(),
     loadNotices()
   ]);
+  populateCategoryDatalist();
   populateSettingsInputs();
   updateDashboard();
   renderFeeReport();
   renderErpStudentWorkspace();
   renderSearchStudentsDirectory();
   if(activeProfileStudentId) openStudentFullProfile(activeProfileStudentId);
-  populateBusRouteSelect();
   if(activeSession?.role === 'parent') renderParentPortal();
 }
 
-/* --- SETTINGS --- */
+/* --- 5. FEE SETTINGS (FEE SETTINGS ONLY) --- */
 function populateSettingsInputs(){
   if($('setNextReceiptNo')) $('setNextReceiptNo').value = Math.max(1, Number(feeSettings.nextReceiptNo || 1));
   if($('setReceiptPrefix')) $('setReceiptPrefix').value = feeSettings.receiptPrefix || '';
-  if($('officeStaffName')) $('officeStaffName').value = officeStaffConfig.name || 'Office Staff';
-  if($('officeStaffUser')) $('officeStaffUser').value = officeStaffConfig.username || '';
-  if($('officeStaffPass')) $('officeStaffPass').value = officeStaffConfig.password || '';
   if($('setSchoolName')) $('setSchoolName').value = feeSettings.schoolName || 'KYHSS ATHAVANAD';
   if($('setBatch')) $('setBatch').value = feeSettings.batch || '2026-2027';
   if($('setCurrency')) $('setCurrency').value = feeSettings.currency || '₹';
   if($('setAutoAssign')) $('setAutoAssign').checked = !!feeSettings.autoAssign;
 }
-
-window.saveOfficeStaffLogin = async function(){
-  const name = $('officeStaffName').value.trim() || 'Office Staff';
-  const username = $('officeStaffUser').value.trim();
-  const password = $('officeStaffPass').value.trim();
-  if(!username || !password){ showMsg('officeLoginMsg', 'Office Staff Username, Password എന്നിവ നൽകുക.', 'error'); return; }
-  try{
-    officeStaffConfig = { name, username, password, updatedAt: new Date().toISOString() };
-    await setDoc(doc(db, 'office_staff_config', 'login'), officeStaffConfig);
-    showMsg('officeLoginMsg', `Office Staff Login (${username}) സേവ് ചെയ്തു!`, 'success');
-  }catch(e){ showMsg('officeLoginMsg', 'Error: ' + e.message, 'error'); }
-};
 
 async function loadFeeSettings(){
   try{
@@ -2070,16 +2024,97 @@ window.saveFeeSettings = async function(){
     schoolName: $('setSchoolName').value.trim() || 'KYHSS ATHAVANAD',
     batch: $('setBatch').value.trim() || '2026-2027',
     currency: $('setCurrency').value.trim() || '₹',
+    nextReceiptNo: Math.max(1, Number($('setNextReceiptNo').value) || 1),
+    receiptPrefix: $('setReceiptPrefix').value.trim(),
     autoAssign: $('setAutoAssign').checked
   };
   try{
     await setDoc(doc(db, 'fee_settings', 'default'), feeSettings);
-    showMsg('setMsg', 'Settings saved!', 'success');
+    showMsg('setMsg', 'Fee settings saved successfully!', 'success');
     renderFeeReport(); renderErpStudentWorkspace(); updateDashboard();
   }catch(e){ showMsg('setMsg', 'Error: ' + e.message, 'error'); }
 };
 
-/* --- FEE STRUCTURE (MULTI-CLASS, INSTALLMENTS, SYNC TO STUDENTS & SUMMARY) --- */
+/* --- 1. FEE CATEGORY --- */
+async function loadFeeCategories(){
+  try{
+    const snap = await getDocs(collection(db, 'fee_categories'));
+    feeCategories = snap.docs.map(d => ({id:d.id, ...d.data()}))
+      .sort((a,b) => String(a.name).localeCompare(String(b.name)));
+    renderFeeCategories();
+    populateCategoryDatalist();
+  }catch(e){}
+}
+
+function populateCategoryDatalist(){
+  const dl = $('feeCategoryList');
+  if(!dl) return;
+  const defaults = ['Tuition Fee', 'Admission Fee', 'Special Fee', 'Exam Fee', 'Bus Fee', 'Computer / Lab Fee'];
+  const allNames = [...new Set([...feeCategories.map(c => c.name), ...feeStructures.map(s => s.title), ...defaults].filter(Boolean))];
+  dl.innerHTML = allNames.map(n => `<option value="${esc(n)}">`).join('');
+}
+
+window.saveFeeCategory = async function(){
+  const name = $('catName').value.trim();
+  const description = $('catDesc').value.trim();
+  if(!name){ showMsg('catMsg', 'Fee Category Name നൽകുക.', 'error'); return; }
+  if(feeCategories.some(c => String(c.name).toLowerCase() === name.toLowerCase() && c.id !== editingCatId)){
+    showMsg('catMsg', 'ഈ Fee Category ഇതിനകം നിലവിലുണ്ട്.', 'error');
+    return;
+  }
+  try{
+    $('saveCatBtn').disabled = true;
+    if(editingCatId){
+      await updateDoc(doc(db, 'fee_categories', editingCatId), { name, description, updatedAt: new Date().toISOString() });
+      showMsg('catMsg', `Fee Category "${name}" updated!`, 'success');
+    } else {
+      await addDoc(collection(db, 'fee_categories'), { name, description, createdAt: new Date().toISOString() });
+      showMsg('catMsg', `Fee Category "${name}" added!`, 'success');
+    }
+    clearCategoryForm(false);
+    await loadFeeCategories();
+  }catch(e){ showMsg('catMsg', 'Error: ' + e.message, 'error'); }
+  finally{ $('saveCatBtn').disabled = false; }
+};
+
+window.editFeeCategory = function(id){
+  const item = feeCategories.find(x => x.id === id);
+  if(!item) return;
+  editingCatId = id;
+  $('catFormTitle').textContent = 'Edit Fee Category';
+  $('saveCatBtn').textContent = 'Update Category';
+  $('catName').value = item.name || '';
+  $('catDesc').value = item.description || '';
+};
+
+window.clearCategoryForm = function(clearM=true){
+  editingCatId = null;
+  $('catFormTitle').textContent = 'Add Fee Category';
+  $('saveCatBtn').textContent = 'Save Category';
+  $('catName').value = '';
+  $('catDesc').value = '';
+  if(clearM) $('catMsg').textContent = '';
+};
+
+function renderFeeCategories(){
+  if(!$('catRows')) return;
+  const canEdit = activeSession?.role === 'admin' || activeSession?.role === 'office';
+  if(!feeCategories.length){
+    $('catRows').innerHTML = '<tr><td colspan="4">No fee categories added yet. Add categories like Tuition Fee, Admission Fee, etc. above.</td></tr>';
+    return;
+  }
+  $('catRows').innerHTML = feeCategories.map((c, idx) => `<tr>
+    <td>${idx + 1}</td>
+    <td><strong>${esc(c.name)}</strong></td>
+    <td>${esc(c.description || '-')}</td>
+    <td class="no-print admin-only" style="${canEdit?'':'display:none'}">
+      <button type="button" class="iconbtn" title="Edit" onclick="editFeeCategory('${c.id}')">✏️</button>
+      <button type="button" class="iconbtn del" title="Delete" onclick="delDoc('fee_categories','${c.id}')">🗑️</button>
+    </td>
+  </tr>`).join('');
+}
+
+/* --- 2. FEE STRUCTURE --- */
 window.toggleStructClasses = function(checked){
   document.querySelectorAll('#structClassCheckboxes input[type="checkbox"]').forEach(cb => { cb.checked = checked; });
 };
@@ -2158,12 +2193,16 @@ window.saveFeeStructure = async function(){
   const autoSync = $('structAutoSyncStudents')?.checked ?? true;
 
   if(!title || !amount || amount <= 0){
-    showMsg('structMsg', 'Fee Category/Title, Amount എന്നിവ നൽകുക.', 'error');
+    showMsg('structMsg', 'Fee Category, Amount എന്നിവ നൽകുക.', 'error');
     return;
   }
 
   try{
     $('saveStructBtn').disabled = true;
+    if(!feeCategories.some(c => String(c.name).toLowerCase() === title.toLowerCase())){
+      await addDoc(collection(db, 'fee_categories'), { name: title, description: '', createdAt: new Date().toISOString() });
+    }
+
     if(editingStructId){
       const className = $('structClass').value;
       if(!className){ showMsg('structMsg', 'Class തിരഞ്ഞെടുക്കുക.', 'error'); return; }
@@ -2266,6 +2305,7 @@ window.clearStructForm = function(clearM=true){
 };
 
 window.renderFeeStructures = function(){
+  if(!$('structRows')) return;
   const canEdit = activeSession?.role === 'admin' || activeSession?.role === 'office';
   const clsFilter = $('structFilterClass')?.value || '';
   const filtered = feeStructures.filter(fs => !clsFilter || String(fs.className) === String(clsFilter));
@@ -2293,71 +2333,20 @@ window.renderFeeStructures = function(){
   </tr>`).join('');
 };
 
-/* --- BUS FEE --- */
+/* --- BUS ROUTES & ASSIGNMENTS (PRESERVED FOR EXISTING DATA) --- */
 async function loadBusRoutes(){
   try{
     const snap = await getDocs(collection(db, 'bus_routes'));
     busRoutes = snap.docs.map(d => ({id:d.id, ...d.data()}));
-    renderBusRoutes();
-    populateBusRouteSelect();
   }catch(e){}
-}
-
-function populateBusRouteSelect(){
-  if(!$('assignBusRouteId')) return;
-  $('assignBusRouteId').innerHTML = '<option value="">Select Route & Stage</option>' +
-    busRoutes.map(r => `<option value="${r.id}">${esc(r.route)} - ${esc(r.stage)} (${fmtMoney(r.rate)})</option>`).join('');
-}
-
-window.saveBusRoute = async function(){
-  const route = $('busRoute').value.trim();
-  const stage = $('busStage').value.trim();
-  const rate = Number($('busRate').value);
-  if(!route || !stage || !rate || rate <= 0){ showMsg('busMsg', 'Route, Stage, Rate എന്നിവ നൽകുക.', 'error'); return; }
-  try{
-    await addDoc(collection(db, 'bus_routes'), { route, stage, rate, createdAt: new Date().toISOString() });
-    $('busRoute').value = ''; $('busStage').value = ''; $('busRate').value = '';
-    showMsg('busMsg', 'Bus route & stage saved!', 'success');
-    await loadBusRoutes();
-  }catch(e){ showMsg('busMsg', 'Error: ' + e.message, 'error'); }
-};
-
-function renderBusRoutes(){
-  const canEdit = activeSession?.role === 'admin' || activeSession?.role === 'office';
-  if(!busRoutes.length){ $('busRouteRows').innerHTML = '<tr><td colspan="4">No bus routes added yet.</td></tr>'; return; }
-  $('busRouteRows').innerHTML = busRoutes.map(r => `<tr>
-    <td><strong>${esc(r.route)}</strong></td>
-    <td>${esc(r.stage)}</td>
-    <td><strong>${fmtMoney(r.rate)}</strong></td>
-    <td class="no-print admin-only" style="${canEdit?'':'display:none'}"><button type="button" class="iconbtn del" title="Delete" onclick="delDoc('bus_routes','${r.id}')">🗑️</button></td>
-  </tr>`).join('');
 }
 
 async function loadBusAssignments(){
   try{
     const snap = await getDocs(collection(db, 'bus_assignments'));
     busAssignments = snap.docs.map(d => ({id:d.id, ...d.data()}));
-    renderBusAssignments();
   }catch(e){}
 }
-
-window.assignBusToClass = async function(){
-  const className = $('assignBusClass').value;
-  const routeId = $('assignBusRouteId').value;
-  if(!className || !routeId){ showMsg('assignBusMsg', 'Class, Route & Stage എന്നിവ തിരഞ്ഞെടുക്കുക.', 'error'); return; }
-  const route = busRoutes.find(r => r.id === routeId);
-  if(!route) return;
-  try{
-    await setDoc(doc(db, 'bus_assignments', `class_${className}`), {
-      className, routeId, route: route.route, stage: route.stage, rate: Number(route.rate), updatedAt: new Date().toISOString()
-    });
-    const classStudents = students.filter(s => String(s.className) === String(className));
-    let added = 0;
-    for(const st of classStudents){ added += await assignBusFeeToStudent(st.id, st.name, st.className, route); }
-    showMsg('assignBusMsg', `Class ${className}-ന് Bus assign ചെയ്തു (${added} students-ന് Bus Fee ചേർത്തു).`, 'success');
-    await loadAll();
-  }catch(e){ showMsg('assignBusMsg', 'Error: ' + e.message, 'error'); }
-};
 
 async function assignBusFeeToStudent(studentId, studentName, className, busRule){
   const title = `Bus Fee (${busRule.route} - ${busRule.stage})`;
@@ -2373,22 +2362,6 @@ async function assignBusFeeToStudent(studentId, studentName, className, busRule)
   await addDoc(collection(db, 'fees'), rec);
   fees.push(rec);
   return 1;
-}
-
-function renderBusAssignments(){
-  const canEdit = activeSession?.role === 'admin' || activeSession?.role === 'office';
-  if(!busAssignments.length){ $('busAssignRows').innerHTML = '<tr><td colspan="6">No class bus assignments yet.</td></tr>'; return; }
-  $('busAssignRows').innerHTML = busAssignments.map(ba => {
-    const cnt = students.filter(s => String(s.className) === String(ba.className)).length;
-    return `<tr>
-      <td><strong>Class ${esc(ba.className)}</strong></td>
-      <td>${esc(ba.route)}</td>
-      <td>${esc(ba.stage)}</td>
-      <td><strong>${fmtMoney(ba.rate)}</strong></td>
-      <td>${cnt}</td>
-      <td class="no-print admin-only" style="${canEdit?'':'display:none'}"><button type="button" class="iconbtn del" title="Delete" onclick="delDoc('bus_assignments','${ba.id}')">🗑️</button></td>
-    </tr>`;
-  }).join('');
 }
 
 async function assignClassFeesToStudent(studentId, studentName, className){
@@ -2891,7 +2864,7 @@ async function loadMarks(){
   }catch(e){}
 }
 
-/* --- STUDENT FEE WORKSPACE --- */
+/* --- 3. FEE COLLECTION (Student Selection -> Due Fee, Paid Fee, Receipt, Siblings) --- */
 async function loadFees(){
   try{
     const snap = await getDocs(collection(db,'fees'));
@@ -2964,6 +2937,30 @@ document.addEventListener('click', (e)=>{
   }
 });
 
+window.switchFeeCollectionSection = function(secName, btn){
+  document.querySelectorAll('#erpStudentPanel .fc-subpanel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('#erpStudentPanel .fc-sec-btn').forEach(b => b.classList.remove('active'));
+  $('fcPanel-' + secName)?.classList.add('active');
+  if(btn) btn.classList.add('active');
+  else document.querySelector(`#erpStudentPanel .fc-sec-btn[data-fcsec="${secName}"]`)?.classList.add('active');
+};
+
+function getDetectedSiblings(st){
+  if(!st) return [];
+  const phone = String(st.phone || '').trim();
+  const parent = String(st.parentName || '').trim().toLowerCase();
+  const linkedIds = Array.isArray(st.siblingIds) ? st.siblingIds : [];
+
+  return students.filter(other => {
+    if(other.id === st.id) return false;
+    if(linkedIds.includes(other.id)) return true;
+    if(Array.isArray(other.siblingIds) && other.siblingIds.includes(st.id)) return true;
+    if(phone && phone.length >= 7 && String(other.phone || '').trim() === phone) return true;
+    if(parent && parent.length >= 3 && String(other.parentName || '').trim().toLowerCase() === parent) return true;
+    return false;
+  });
+}
+
 function renderErpStudentWorkspace(){
   if(!$('erpEmptyState')) return;
   const st = students.find(s => s.id === selectedErpStudentId);
@@ -2977,8 +2974,12 @@ function renderErpStudentWorkspace(){
   $('erpStudentPanel').style.display = 'block';
 
   const sFees = fees.filter(f => f.studentId === st.id);
-  const dueSum = sFees.filter(f => f.status === 'Pending').reduce((a,b)=>a+Number(b.amount||0),0);
-  const paidSum = sFees.filter(f => f.status === 'Paid').reduce((a,b)=>a+Number(b.amount||0),0);
+  const dueFees = sFees.filter(f => f.status !== 'Paid');
+  const paidFees = sFees.filter(f => f.status === 'Paid');
+  const siblings = getDetectedSiblings(st);
+
+  const dueSum = dueFees.reduce((a,b)=>a+Number(b.amount||0),0);
+  const paidSum = paidFees.reduce((a,b)=>a+Number(b.amount||0),0);
 
   const photoHtml = st.photo
     ? `<img class="erp-photo" src="${st.photo}" alt="${esc(st.name)}">`
@@ -3004,55 +3005,119 @@ function renderErpStudentWorkspace(){
     </div>
   `;
 
-  renderSelectedStudentFeeTable();
+  if($('fcDueCount')) $('fcDueCount').textContent = dueFees.length;
+  if($('fcPaidCount')) $('fcPaidCount').textContent = paidFees.length;
+  if($('fcReceiptCount')) $('fcReceiptCount').textContent = paidFees.length;
+  if($('fcSiblingCount')) $('fcSiblingCount').textContent = siblings.length;
+
+  $('fcDueRows').innerHTML = dueFees.length
+    ? dueFees.map(f => `<tr>
+        <td>${esc(f.period || f.date || todayISO)}</td>
+        <td><strong>${esc(f.title)}</strong></td>
+        <td>${esc(f.batch || feeSettings.batch || '2026-2027')}</td>
+        <td><strong>${fmtMoney(f.amount)}</strong></td>
+        <td><span class="pill amber">Due</span></td>
+        <td>${esc(f.remark || '-')}</td>
+        <td class="no-print">
+          <button type="button" class="btn smallbtn teal" onclick="openPayFeeModal('${f.id}')">Pay Fee</button>
+          <button type="button" class="iconbtn del" title="Delete" onclick="delDoc('fees','${f.id}')">🗑️</button>
+        </td>
+      </tr>`).join('')
+    : '<tr><td colspan="7">No due fees pending for this student.</td></tr>';
+
+  $('fcPaidRows').innerHTML = paidFees.length
+    ? paidFees.map(f => `<tr>
+        <td>${esc(f.period || f.date || todayISO)}</td>
+        <td><strong>${esc(f.title)}</strong></td>
+        <td><strong style="color:var(--teal)">${fmtMoney(f.amount)}</strong></td>
+        <td>${f.receiptNo ? `<strong>#${esc(f.receiptNo)}</strong>` : '-'}</td>
+        <td>${esc(f.paymentMode || 'Cash')} • ${esc(f.paymentDate || f.date || todayISO)}</td>
+        <td>${esc(f.remark || '-')}</td>
+        <td>${esc(f.collectedBy || 'Admin')}</td>
+        <td class="no-print">
+          <button type="button" class="iconbtn del" title="Delete" onclick="delDoc('fees','${f.id}')">🗑️</button>
+        </td>
+      </tr>`).join('')
+    : '<tr><td colspan="8">No paid fees recorded yet for this student.</td></tr>';
+
+  $('fcReceiptRows').innerHTML = paidFees.length
+    ? paidFees.map(f => `<tr>
+        <td><strong>#${esc(f.receiptNo || '-')}</strong></td>
+        <td>${esc(f.paymentDate || f.date || todayISO)}</td>
+        <td>${esc(f.title)} (${esc(f.period || '')})</td>
+        <td><strong>${fmtMoney(f.amount)}</strong></td>
+        <td><span class="pill blue">${esc(f.paymentMode || 'Cash')}</span></td>
+        <td>${esc(f.collectedBy || 'Admin')}</td>
+        <td class="no-print">
+          <button type="button" class="btn smallbtn teal" onclick="openSingleFeeReceipt('${f.id}')">🧾 View & Print Receipt</button>
+        </td>
+      </tr>`).join('')
+    : '<tr><td colspan="7">No receipts generated yet. Collect a fee payment to generate a receipt.</td></tr>';
+
+  renderSiblingsSection(st, siblings);
 }
 
-window.renderSelectedStudentFeeTable = function(){
-  const st = students.find(s => s.id === selectedErpStudentId);
-  if(!st) return;
+function renderSiblingsSection(st, siblings){
+  const listWrap = $('fcSiblingsList');
+  const sel = $('siblingSelectDropdown');
+  if(!listWrap || !sel) return;
 
-  const showDue = $('fltDue')?.checked ?? true;
-  const showPaid = $('fltPaid')?.checked ?? true;
-  const showBus = $('fltBus')?.checked ?? true;
+  const otherStudents = students.filter(x => x.id !== st.id && !siblings.some(sib => sib.id === x.id));
+  sel.innerHTML = '<option value="">Select sibling student...</option>' +
+    otherStudents.map(x => `<option value="${x.id}">${esc(x.name)} (Ad No: ${esc(x.admissionNo)} • Class ${esc(x.className)} ${esc(x.division||'')})</option>`).join('');
 
-  const rows = fees.filter(f => {
-    if(f.studentId !== st.id) return false;
-    const isBusRow = !!f.isBus || /bus/i.test(f.title||'');
-    if(!showBus && isBusRow) return false;
-    if(f.status === 'Pending' && !showDue) return false;
-    if(f.status === 'Paid' && !showPaid) return false;
-    return true;
-  });
-
-  if(!rows.length){
-    $('erpFeeRows').innerHTML = '<tr><td colspan="11">No fee items match the selected filter for this student.</td></tr>';
+  if(!siblings.length){
+    listWrap.innerHTML = `<div style="padding:14px;background:#f8fafc;border:1px solid var(--line);border-radius:10px;font-size:13.5px;color:var(--muted)">
+      No siblings found automatically for <strong>${esc(st.name)}</strong>. Use the selector below to link a sibling student and manage their fees.
+    </div>`;
     return;
   }
 
-  $('erpFeeRows').innerHTML = rows.map(f => {
-    const isPaid = f.status === 'Paid';
-    const modeDate = isPaid ? `${esc(f.paymentMode || 'Cash')} • ${esc(f.paymentDate || f.date || todayISO)}` : '-';
-    return `<tr>
-      <td class="no-print"><input type="checkbox" class="erp-row-chk" value="${f.id}" ${isPaid?'checked':''}></td>
-      <td>${esc(f.period || f.date || todayISO)}</td>
-      <td><strong>${esc(f.title)}</strong></td>
-      <td>${esc(f.batch || feeSettings.batch || '2026-2027')}</td>
-      <td><strong>${fmtMoney(f.amount)}</strong></td>
-      <td><span class="pill ${isPaid?'green':'amber'}">${isPaid?'Paid':'Due'}</span></td>
-      <td>${f.receiptNo ? `<strong>#${esc(f.receiptNo)}</strong>` : '-'}</td>
-      <td>${modeDate}</td>
-      <td>${esc(f.remark || '-')}</td>
-      <td>${esc(f.collectedBy || (isPaid?'Admin':'-'))}</td>
-      <td class="no-print">
-        ${!isPaid ? `<button type="button" class="btn smallbtn teal" onclick="openPayFeeModal('${f.id}')">Pay & Bill</button>` : `<button type="button" class="btn smallbtn sec" onclick="openSingleFeeReceipt('${f.id}')">Bill</button>`}
-        <button type="button" class="iconbtn del" title="Delete" onclick="delDoc('fees','${f.id}')">🗑️</button>
-      </td>
-    </tr>`;
+  listWrap.innerHTML = siblings.map(sib => {
+    const sibFees = fees.filter(f => f.studentId === sib.id);
+    const sibDue = sibFees.filter(f => f.status !== 'Paid').reduce((a,b)=>a+Number(b.amount||0),0);
+    const sibPaid = sibFees.filter(f => f.status === 'Paid').reduce((a,b)=>a+Number(b.amount||0),0);
+    return `
+      <div class="sibling-card">
+        <div style="display:flex;align-items:center;gap:12px">
+          ${renderAvatar(sib.photo, sib.name)}
+          <div>
+            <div style="font-weight:700;font-size:15px;color:#0f172a">${esc(sib.name)} <span class="pill blue">Ad No: ${esc(sib.admissionNo)}</span></div>
+            <div style="font-size:12.5px;color:var(--muted);margin-top:2px">Class ${esc(sib.className)} ${sib.division?`(${esc(sib.division)})`:''} • Parent: ${esc(sib.parentName||'-')}</div>
+            <div style="display:flex;gap:8px;margin-top:6px">
+              <span class="pill ${sibDue>0?'red':'green'}">Due: ${fmtMoney(sibDue)}</span>
+              <span class="pill green">Paid: ${fmtMoney(sibPaid)}</span>
+            </div>
+          </div>
+        </div>
+        <div class="no-print">
+          <button type="button" class="btn smallbtn teal" onclick="selectErpStudent('${sib.id}', true); switchFeeCollectionSection('due');">
+            Manage Sibling Fees →
+          </button>
+        </div>
+      </div>
+    `;
   }).join('');
-};
+}
 
-window.toggleSelectAllStudentFees = function(checked){
-  document.querySelectorAll('.erp-row-chk').forEach(chk => { chk.checked = checked; });
+window.linkAndOpenSibling = async function(){
+  const st = students.find(s => s.id === selectedErpStudentId);
+  const sibId = $('siblingSelectDropdown')?.value;
+  if(!st || !sibId){ showMsg('siblingMsg', 'ഒരു sibling student-നെ തിരഞ്ഞെടുക്കുക.', 'error'); return; }
+  const sib = students.find(s => s.id === sibId);
+  if(!sib) return;
+
+  try{
+    const stSibs = [...new Set([...(Array.isArray(st.siblingIds)?st.siblingIds:[]), sib.id])];
+    const otherSibs = [...new Set([...(Array.isArray(sib.siblingIds)?sib.siblingIds:[]), st.id])];
+    await updateDoc(doc(db, 'students', st.id), { siblingIds: stSibs });
+    await updateDoc(doc(db, 'students', sib.id), { siblingIds: otherSibs });
+    await loadStudents();
+    selectErpStudent(sib.id, true);
+    switchFeeCollectionSection('due');
+  }catch(e){
+    showMsg('siblingMsg', 'Error linking sibling: ' + e.message, 'error');
+  }
 };
 
 window.addFeeForSelectedStudent = async function(openBillAfter=false){
@@ -3061,12 +3126,12 @@ window.addFeeForSelectedStudent = async function(openBillAfter=false){
   const period = $('addFeePeriod').value.trim() || feeSettings.batch || '2026-2027';
   const title = $('addFeeTitle').value.trim();
   const amount = Number($('addFeeAmt').value);
-  const status = $('addFeeStatus').value;
+  const status = openBillAfter ? 'Paid' : $('addFeeStatus').value;
   const payDate = $('addFeeDate').value || todayISO;
   const payMode = $('addFeeMode').value || 'Cash';
   const remark = $('addFeeRemark').value.trim();
 
-  if(!title || !amount || amount <= 0){ showMsg('erpAddMsg','Category/Title, Amount എന്നിവ നൽകുക.','error'); return; }
+  if(!title || !amount || amount <= 0){ showMsg('erpAddMsg','Fee Category/Title, Amount എന്നിവ നൽകുക.','error'); return; }
   const receiptNo = status === 'Paid' ? await allocateNextReceiptNumber() : '';
   const payload = {
     studentId: st.id, studentName: st.name, className: st.className, division: st.division || '',
@@ -3082,14 +3147,16 @@ window.addFeeForSelectedStudent = async function(openBillAfter=false){
   try{
     const ref = await addDoc(collection(db,'fees'), payload);
     $('addFeeTitle').value = ''; $('addFeeAmt').value = ''; $('addFeeRemark').value = '';
-    showMsg('erpAddMsg','Fee added!','success');
+    showMsg('erpAddMsg', status === 'Paid' ? 'Payment saved & receipt generated!' : 'Due fee added!', 'success');
     await loadFees();
     updateDashboard();
-    if(openBillAfter) openReceiptWithItems(st, [{ id: ref.id, ...payload }]);
+    if(status === 'Paid'){
+      openReceiptWithItems(st, [{ id: ref.id, ...payload }]);
+    }
   }catch(e){ showMsg('erpAddMsg','Error: '+e.message,'error'); }
 };
 
-/* --- PAY FEE MODAL --- */
+/* --- PAY FEE MODAL & AUTOMATIC RECEIPT GENERATION --- */
 window.openPayFeeModal = function(feeId){
   const f = fees.find(x => x.id === feeId);
   if(!f) return;
@@ -3146,18 +3213,6 @@ window.openSingleFeeReceipt = async function(feeId){
   openReceiptWithItems(st, [item]);
 };
 
-window.openMultiFeeReceipt = async function(onlyPaid){
-  const st = students.find(s => s.id === selectedErpStudentId);
-  if(!st) return;
-  const checkedIds = [...document.querySelectorAll('.erp-row-chk:checked')].map(c => c.value);
-  let items = checkedIds.length
-    ? fees.filter(f => checkedIds.includes(f.id))
-    : (onlyPaid ? fees.filter(f => f.studentId === st.id && f.status === 'Paid') : fees.filter(f => f.studentId === st.id));
-  if(!items.length){ alert('രസീത് എടുക്കാൻ ഫീസ് rows തിരഞ്ഞെടുക്കുക അല്ലെങ്കിൽ Paid fees ഉണ്ടെന്ന് ഉറപ്പാക്കുക.'); return; }
-  const sharedRcptNo = items[0].receiptNo || await allocateNextReceiptNumber();
-  openReceiptWithItems(st, items.map(x => ({ ...x, receiptNo: x.receiptNo || sharedRcptNo })));
-};
-
 function openReceiptWithItems(st, items){
   const first = items[0] || {};
   $('rcptSchoolName').textContent = feeSettings.schoolName || 'KYHSS ATHAVANAD';
@@ -3206,7 +3261,7 @@ window.printBillNow = function(){
   setTimeout(()=>document.body.classList.remove('printing-bill'), 400);
 };
 
-/* --- FEE & DUE REPORT --- */
+/* --- 4. FEE & DUE REPORT --- */
 window.renderFeeReport = function(){
   const clsFilter = $('repClass')?.value || '';
   const stFilter = $('repStatus')?.value || '';
