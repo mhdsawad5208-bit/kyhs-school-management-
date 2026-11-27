@@ -774,6 +774,43 @@ header h2{
           <div id="formMsg" class="msg"></div>
         </div>
 
+        <!-- BULK STUDENT UPLOAD (CSV) -->
+        <div class="card no-print admin-only" id="bulkUploadCard">
+          <h3>Bulk Student Upload (CSV — Up to 1000+ Students)</h3>
+          <p style="margin:0 0 12px;font-size:13px;color:var(--muted)">
+            CSV ഫയലിൽ (<code>AdmissionNo,Name,Class,Division,Gender,DOB,ParentName,MotherName,Phone,Pin,Address</code>) വിദ്യാർത്ഥികളുടെ വിവരങ്ങൾ നൽകി ഒന്നിച്ച് അപ്‌ലോഡ് ചെയ്യാം.
+          </p>
+
+          <div class="grid-3" style="align-items:end">
+            <div>
+              <label>Select CSV File *</label>
+              <input id="bulkCsvInput" type="file" accept=".csv,text/csv">
+            </div>
+            <div style="display:flex;gap:8px;flex-wrap:wrap">
+              <button type="button" class="btn sec" onclick="downloadStudentCsvTemplate()">Download Sample CSV</button>
+              <button type="button" class="btn teal" id="bulkUploadBtn" onclick="processBulkStudentCsv()">Upload Students</button>
+            </div>
+            <div>
+              <label style="display:inline-flex;align-items:center;margin:0;cursor:pointer">
+                <input type="checkbox" id="bulkAutoAssignFees" checked>
+                <span>Auto-assign class fee structure</span>
+              </label>
+            </div>
+          </div>
+
+          <div id="bulkProgressWrap" style="display:none;margin-top:12px">
+            <div style="display:flex;justify-content:space-between;font-size:12.5px;font-weight:600;margin-bottom:4px">
+              <span id="bulkProgressText">Uploading...</span>
+              <span id="bulkProgressPct">0%</span>
+            </div>
+            <div style="width:100%;height:10px;background:#e2e8f0;border-radius:999px;overflow:hidden">
+              <div id="bulkProgressBar" style="width:0%;height:100%;background:#0d9488;transition:width .2s"></div>
+            </div>
+          </div>
+
+          <div id="bulkUploadMsg" class="msg"></div>
+        </div>
+
         <div class="card">
           <h3>Student List</h3>
           <div class="toolbar no-print">
@@ -895,7 +932,7 @@ header h2{
         </div>
       </section>
 
-      <!-- 4. ATTENDANCE -->
+      <!-- 4. ATTENDANCE (WITH CLASS + DIVISION SELECTION) -->
       <section id="view-attendance" class="view">
         <div class="tab-back-bar no-print">
           <button type="button" class="back-arrow-btn" onclick="backFromModule()">← Back</button>
@@ -904,10 +941,22 @@ header h2{
 
         <div class="card">
           <h3>Mark Daily Attendance</h3>
-          <div class="grid-3">
+          <div class="grid-4">
             <div><label>Date *</label><input id="attDate" type="date" onchange="loadAttendanceForm()"></div>
-            <div><label>Class *</label><select id="attClass" onchange="loadAttendanceForm()"><option value="">Select class</option><option>LKG</option><option>UKG</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option><option>7</option><option>8</option><option>9</option><option>10</option><option>11</option><option>12</option></select></div>
-            <div style="display:flex;align-items:flex-end;gap:8px">
+            <div>
+              <label>Class *</label>
+              <select id="attClass" onchange="onAttClassChange()">
+                <option value="">Select class</option>
+                <option>LKG</option><option>UKG</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option><option>7</option><option>8</option><option>9</option><option>10</option><option>11</option><option>12</option>
+              </select>
+            </div>
+            <div>
+              <label>Division *</label>
+              <select id="attDivision" onchange="loadAttendanceForm()">
+                <option value="">Select division</option>
+              </select>
+            </div>
+            <div style="display:flex;align-items:flex-end;gap:8px;flex-wrap:wrap">
               <button type="button" class="btn sec" onclick="markAllAtt('Present')">All Present</button>
               <button type="button" class="btn teal" id="saveAttBtn" onclick="saveAttendance()">Save Attendance</button>
             </div>
@@ -915,7 +964,7 @@ header h2{
           <div id="attMsg" class="msg"></div>
           <div class="tablewrap" style="margin-top:14px">
             <table><thead><tr><th>Adm No.</th><th>Student Name</th><th>Class / Div</th><th>Status</th></tr></thead>
-            <tbody id="attRows"><tr><td colspan="4">Select a class to mark attendance.</td></tr></tbody></table>
+            <tbody id="attRows"><tr><td colspan="4">Select Class and Division to mark attendance.</td></tr></tbody></table>
           </div>
         </div>
       </section>
@@ -998,7 +1047,7 @@ header h2{
         </div>
       </section>
 
-      <!-- 6. FINANCE MODULE (1. Fee Category, 2. Fee Structure, 3. Fee Collection, 4. Report, 5. Settings) -->
+      <!-- 6. FINANCE MODULE -->
       <section id="view-finance" class="view">
         <div class="tab-back-bar no-print">
           <button type="button" class="back-arrow-btn" onclick="backFromModule()">← Back</button>
@@ -1013,7 +1062,6 @@ header h2{
           <button type="button" class="subtab-btn" data-ftab="settings" onclick="switchFinanceTab('settings',this)">5. Settings</button>
         </div>
 
-        <!-- TAB 1: FEE CATEGORY -->
         <div id="feeTab-category" class="fee-panel active">
           <div class="card no-print admin-only">
             <h3 id="catFormTitle">Add Fee Category</h3>
@@ -1062,7 +1110,6 @@ header h2{
           </div>
         </div>
 
-        <!-- TAB 2: FEE STRUCTURE (AUTO-APPLIES TO MATCHING STUDENTS) -->
         <div id="feeTab-structure" class="fee-panel">
           <div class="card no-print admin-only">
             <h3 id="structFormTitle">Set Class Fee Structure</h3>
@@ -1139,7 +1186,7 @@ header h2{
                 <label class="class-chip"><input type="checkbox" value="9">Class 9</label>
                 <label class="class-chip"><input type="checkbox" value="10">Class 10</label>
                 <label class="class-chip"><input type="checkbox" value="11">Class 11</label>
-                <label class="class-chip"><input type="checkbox" value="12">Class 12</option>
+                <label class="class-chip"><input type="checkbox" value="12">Class 12</label>
               </div>
             </div>
 
@@ -1186,7 +1233,6 @@ header h2{
           </div>
         </div>
 
-        <!-- TAB 3: FEE COLLECTION -->
         <div id="feeTab-collection" class="fee-panel">
           <div class="card no-print">
             <h3>Fee Collection — Student Selection</h3>
@@ -1221,13 +1267,9 @@ header h2{
             </div>
 
             <div id="erpStudentPanel" style="display:none">
-              <!-- Student Information Banner -->
               <div id="erpStudentBanner" class="erp-student-banner"></div>
-
-              <!-- Bus Details Strip (Shown when applicable) -->
               <div id="erpBusDetailsStrip" class="bus-info-strip" style="display:none"></div>
 
-              <!-- Filter Checkboxes + CREATE FEE, Refresh & SIBLINGS buttons -->
               <div class="fc-control-bar no-print">
                 <div class="fc-checkbox-strip">
                   <label class="fc-chk-label"><input type="checkbox" id="chkDueFee" checked onchange="renderMonthWiseFeeTable()">Due Fee</label>
@@ -1246,10 +1288,8 @@ header h2{
                 </div>
               </div>
 
-              <!-- Inline Siblings Quick Banner (when Siblings checkbox or modal selection is active) -->
               <div id="inlineSiblingsContainer" style="display:none;margin-bottom:14px"></div>
 
-              <!-- Receipt History Table (Shown when Fees Receipt checkbox is checked) -->
               <div id="receiptHistoryContainer" style="display:none;margin-bottom:16px">
                 <div class="card" style="background:#f8fafc;margin-bottom:0">
                   <h3 style="font-size:14.5px;margin-bottom:10px">Generated Fee Receipts History</h3>
@@ -1272,10 +1312,8 @@ header h2{
                 </div>
               </div>
 
-              <!-- Month-Wise Expandable / Collapsible Fee Details Table -->
               <div id="monthWiseFeeContainer"></div>
 
-              <!-- NEW PAYMENT PANEL (Appears dynamically when 1 or more fees are selected) -->
               <div id="newPaymentPanel" class="payment-panel-card no-print" style="display:none">
                 <div class="payment-panel-head">
                   <div>
@@ -1326,7 +1364,6 @@ header h2{
           </div>
         </div>
 
-        <!-- TAB 4: REPORTS (Daily, Monthly, Student-wise, Class-wise, Due, Cash, Bank) -->
         <div id="feeTab-report" class="fee-panel">
           <div class="card">
             <h3>Finance & Fee Collection Reports</h3>
@@ -1375,7 +1412,6 @@ header h2{
           </div>
         </div>
 
-        <!-- TAB 5: SETTINGS (FEE SETTINGS ONLY) -->
         <div id="feeTab-settings" class="fee-panel">
           <div class="card">
             <h3>Fee & Receipt Settings</h3>
@@ -2142,6 +2178,9 @@ window.switchView = function(name, btn){
     if(activeProfileStudentId) openStudentFullProfile(activeProfileStudentId);
     else closeStudentFullProfile();
   }
+  if(name === 'attendance'){
+    onAttClassChange();
+  }
   if(name === 'reports') renderManualReport();
   if(name === 'parent-home') renderParentPortal();
 };
@@ -2228,6 +2267,7 @@ async function loadAll(){
   renderFeeReport();
   renderErpStudentWorkspace();
   renderSearchStudentsDirectory();
+  onAttClassChange();
   if(activeProfileStudentId) openStudentFullProfile(activeProfileStudentId);
   if(activeSession?.role === 'parent') renderParentPortal();
 }
@@ -2748,6 +2788,149 @@ window.saveStudent = async function(){
   finally{ $('saveBtn').disabled = false; }
 };
 
+/* --- BULK STUDENT UPLOAD (CSV) --- */
+window.downloadStudentCsvTemplate = function(){
+  const headers = ['AdmissionNo','Name','Class','Division','Gender','DOB','ParentName','MotherName','Phone','Pin','Address'];
+  const sampleRows = [
+    ['1001','Muhammed Sinan','10','A','Male','2011-05-14','Abdul Latheef','Ramlath','9876543210','3210','Athavanad PO, Malappuram'],
+    ['1002','Fathima Nida','10','B','Female','2011-08-22','Basheer K','Suhara','9876543211','3211','Valanchery, Malappuram']
+  ];
+  const csv = [headers, ...sampleRows]
+    .map(r => r.map(v => `"${String(v ?? '').replace(/"/g, '""')}"`).join(','))
+    .join('
+');
+  const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'KYHSS_Students_Bulk_Template.csv';
+  a.click();
+};
+
+function parseCsvRows(text){
+  const rows = [];
+  let row = [], cell = '', inQuotes = false;
+  for(let i = 0; i < text.length; i++){
+    const ch = text[i], next = text[i + 1];
+    if(inQuotes){
+      if(ch === '"' && next === '"'){ cell += '"'; i++; }
+      else if(ch === '"'){ inQuotes = false; }
+      else { cell += ch; }
+    } else {
+      if(ch === '"'){ inQuotes = true; }
+      else if(ch === ','){ row.push(cell.trim()); cell = ''; }
+      else if(ch === '' && next === '
+'){ row.push(cell.trim()); rows.push(row); row = []; cell = ''; i++; }
+      else if(ch === '
+' || ch === ''){ row.push(cell.trim()); rows.push(row); row = []; cell = ''; }
+      else { cell += ch; }
+    }
+  }
+  if(cell.length || row.length){ row.push(cell.trim()); rows.push(row); }
+  return rows.filter(r => r.some(c => c !== ''));
+}
+
+window.processBulkStudentCsv = async function(){
+  const file = $('bulkCsvInput')?.files?.[0];
+  if(!file){ showMsg('bulkUploadMsg', 'ആദ്യം ഒരു CSV ഫയൽ തിരഞ്ഞെടുക്കുക.', 'error'); return; }
+
+  const btn = $('bulkUploadBtn');
+  btn.disabled = true;
+  $('bulkProgressWrap').style.display = 'block';
+  $('bulkUploadMsg').textContent = '';
+
+  try{
+    const rawText = await file.text();
+    const parsed = parseCsvRows(rawText);
+    if(parsed.length < 2){
+      showMsg('bulkUploadMsg', 'CSV ഫയലിൽ Header-ഉം കുറഞ്ഞത് ഒരു വിദ്യാർത്ഥിയുടെ വിവരവും ഉണ്ടായിരിക്കണം.', 'error');
+      return;
+    }
+
+    const head = parsed[0].map(h => h.toLowerCase().replace(/[^a-z0-9]/g, ''));
+    const colIdx = (names, fallback) => {
+      for(const n of names){
+        const idx = head.indexOf(n);
+        if(idx !== -1) return idx;
+      }
+      return fallback;
+    };
+
+    const iAdm = colIdx(['admissionno','admno','admissionnumber','adm'], 0);
+    const iName = colIdx(['name','studentname','fullname'], 1);
+    const iClass = colIdx(['class','classname','std'], 2);
+    const iDiv = colIdx(['division','div'], 3);
+    const iGen = colIdx(['gender','sex'], 4);
+    const iDob = colIdx(['dob','dateofbirth'], 5);
+    const iParent = colIdx(['parentname','fathername','parent'], 6);
+    const iMother = colIdx(['mothername','mother'], 7);
+    const iPhone = colIdx(['phone','mobile','mobilenumber','contact'], 8);
+    const iPin = colIdx(['pin','parentpin'], 9);
+    const iAddr = colIdx(['address','addr'], 10);
+
+    const existingAdmSet = new Set(students.map(s => String(s.admissionNo || '').trim().toLowerCase()));
+    const dataRows = parsed.slice(1);
+    const autoFees = $('bulkAutoAssignFees')?.checked ?? true;
+
+    let added = 0, skipped = 0, failed = 0;
+
+    for(let i = 0; i < dataRows.length; i++){
+      const r = dataRows[i];
+      const admissionNo = String(r[iAdm] || '').trim();
+      const name = String(r[iName] || '').trim();
+      const className = String(r[iClass] || '').trim();
+
+      if(!admissionNo || !name || !className){
+        failed++;
+      } else if(existingAdmSet.has(admissionNo.toLowerCase())){
+        skipped++;
+      } else {
+        const division = String(r[iDiv] || '').trim();
+        const phone = String(r[iPhone] || '').trim();
+        const pin = String(r[iPin] || '').trim() || phone.replace(/\D/g, '').slice(-4) || '';
+        const studentDoc = {
+          admissionNo,
+          name,
+          className,
+          division,
+          gender: String(r[iGen] || '').trim(),
+          dob: String(r[iDob] || '').trim(),
+          parentName: String(r[iParent] || '').trim(),
+          motherName: String(r[iMother] || '').trim(),
+          phone,
+          parentPin: pin,
+          address: String(r[iAddr] || '').trim(),
+          photo: '',
+          createdAt: new Date().toISOString(),
+          updatedAt: new Date().toISOString()
+        };
+
+        const ref = await addDoc(collection(db, 'students'), studentDoc);
+        existingAdmSet.add(admissionNo.toLowerCase());
+        students.push({ id: ref.id, ...studentDoc });
+        added++;
+
+        if(autoFees && typeof assignClassFeesToStudent === 'function'){
+          await assignClassFeesToStudent(ref.id, name, className, division);
+        }
+      }
+
+      const pct = Math.round(((i + 1) / dataRows.length) * 100);
+      $('bulkProgressBar').style.width = pct + '%';
+      $('bulkProgressPct').textContent = pct + '%';
+      $('bulkProgressText').textContent = `Processed ${i + 1} of ${dataRows.length} (${added} added)...`;
+    }
+
+    await logSecurityAudit('Bulk Student Upload', `Added ${added}, Skipped ${skipped}, Invalid ${failed} from ${file.name}`);
+    $('bulkCsvInput').value = '';
+    await loadAll();
+    showMsg('bulkUploadMsg', `പൂർത്തിയായി! Added: ${added}, Duplicate/Skipped: ${skipped}, Invalid: ${failed}`, 'success');
+  }catch(err){
+    showMsg('bulkUploadMsg', 'Upload error: ' + err.message, 'error');
+  }finally{
+    btn.disabled = false;
+  }
+};
+
 /* --- SEARCH STUDENTS TAB --- */
 window.renderSearchStudentsDirectory = function(){
   const wrap = $('searchStudentCards');
@@ -2867,7 +3050,8 @@ window.downloadStudentFile = function(){
     `Mother Name      : ${st.motherName || ''}`,
     `Mobile Number    : ${st.phone || ''}`,
     `Address          : ${st.address || ''}`
-  ].join('\n');
+  ].join('
+');
   const blob = new Blob([content], { type: 'text/plain;charset=utf-8;' });
   const a = document.createElement('a');
   a.href = URL.createObjectURL(blob);
@@ -2971,7 +3155,7 @@ window.saveStaff = async function(){
   }catch(e){ showMsg('staffMsg','Error: '+e.message,'error'); }
 };
 
-/* --- ATTENDANCE --- */
+/* --- ATTENDANCE (STRICTLY FILTERED BY CLASS + DIVISION) --- */
 async function loadAttendanceLogs(){
   try{
     const snap = await getDocs(collection(db,'attendance'));
@@ -2979,18 +3163,73 @@ async function loadAttendanceLogs(){
   }catch(e){}
 }
 
+window.onAttClassChange = function(){
+  const cls = $('attClass')?.value || '';
+  const divSel = $('attDivision');
+  if(!divSel) return;
+
+  if(!cls){
+    divSel.innerHTML = '<option value="">Select division</option>';
+    $('attRows').innerHTML = '<tr><td colspan="4">Select Class and Division to mark attendance.</td></tr>';
+    return;
+  }
+
+  const prevDiv = divSel.value;
+  const classStudents = students.filter(s => String(s.className) === String(cls));
+  const divs = [...new Set(classStudents.map(s => String(s.division || '').trim()).filter(Boolean))].sort();
+  const hasUnassignedDiv = classStudents.some(s => !String(s.division || '').trim());
+
+  let opts = '<option value="">Select division</option>';
+  if(divs.length){
+    opts += divs.map(d => `<option value="${esc(d)}">${esc(d)}</option>`).join('');
+  }
+  if(hasUnassignedDiv || !divs.length){
+    opts += '<option value="__NO_DIV__">No Division (Unassigned)</option>';
+  }
+  divSel.innerHTML = opts;
+  if(prevDiv && [...divSel.options].some(o => o.value === prevDiv)){
+    divSel.value = prevDiv;
+  } else {
+    divSel.value = '';
+  }
+  loadAttendanceForm();
+};
+
 window.loadAttendanceForm = function(){
-  const cls = $('attClass').value, dt = $('attDate').value;
-  if(!cls){ $('attRows').innerHTML = '<tr><td colspan="4">Select a class to mark attendance.</td></tr>'; return; }
-  const list = students.filter(s => s.className === cls);
-  if(!list.length){ $('attRows').innerHTML = '<tr><td colspan="4">No students in this class.</td></tr>'; return; }
-  const existing = attendanceLogs.find(a => a.date === dt && a.className === cls)?.records || {};
+  const cls = $('attClass')?.value || '';
+  const divVal = $('attDivision')?.value || '';
+  const dt = $('attDate')?.value || todayISO;
+
+  if(!cls){
+    $('attRows').innerHTML = '<tr><td colspan="4">Select Class and Division to mark attendance.</td></tr>';
+    return;
+  }
+  if(!divVal){
+    $('attRows').innerHTML = `<tr><td colspan="4">Class <strong>${esc(cls)}</strong> തിരഞ്ഞെടുത്തു. ഇനി <strong>Division</strong> കൂടി സെലക്ട് ചെയ്യുക.</td></tr>`;
+    return;
+  }
+
+  const list = students.filter(s => {
+    if(String(s.className) !== String(cls)) return false;
+    const sDiv = String(s.division || '').trim();
+    if(divVal === '__NO_DIV__') return sDiv === '';
+    return sDiv.toLowerCase() === divVal.trim().toLowerCase();
+  });
+
+  if(!list.length){
+    $('attRows').innerHTML = `<tr><td colspan="4">No students found in Class ${esc(cls)} — Division ${esc(divVal === '__NO_DIV__' ? 'Unassigned' : divVal)}.</td></tr>`;
+    return;
+  }
+
+  const docKey = `${dt}_${cls}_${divVal}`;
+  const existing = attendanceLogs.find(a => a.id === docKey || (a.date === dt && String(a.className) === String(cls) && String(a.division || '') === (divVal === '__NO_DIV__' ? '' : divVal)))?.records || {};
+
   $('attRows').innerHTML = list.map(s => {
     const st = existing[s.id] || 'Present';
     return `<tr>
       <td>${esc(s.admissionNo)}</td>
-      <td>${esc(s.name)}</td>
-      <td>${esc(s.className)} ${esc(s.division||'')}</td>
+      <td><strong>${esc(s.name)}</strong></td>
+      <td>${esc(s.className)} ${s.division ? `(${esc(s.division)})` : '(No Div)'}</td>
       <td>
         <select class="att-select" data-sid="${s.id}" style="max-width:140px;padding:7px">
           <option value="Present" ${st==='Present'?'selected':''}>Present</option>
@@ -3005,17 +3244,30 @@ window.loadAttendanceForm = function(){
 window.markAllAtt = function(status){ document.querySelectorAll('.att-select').forEach(sel => sel.value = status); };
 
 window.saveAttendance = async function(){
-  const cls = $('attClass').value, dt = $('attDate').value;
-  if(!cls || !dt){ showMsg('attMsg','Date, Class എന്നിവ തിരഞ്ഞെടുക്കുക.','error'); return; }
+  const cls = $('attClass').value, divVal = $('attDivision').value, dt = $('attDate').value;
+  if(!cls || !divVal || !dt){
+    showMsg('attMsg','Date, Class, Division എന്നിവ തിരഞ്ഞെടുക്കുക.','error');
+    return;
+  }
   const selects = document.querySelectorAll('.att-select');
-  if(!selects.length){ showMsg('attMsg','ഈ ക്ലാസ്സിൽ വിദ്യാർത്ഥികൾ ഇല്ല.','error'); return; }
+  if(!selects.length){
+    showMsg('attMsg','ഈ Class + Division-ൽ വിദ്യാർത്ഥികൾ ഇല്ല.','error');
+    return;
+  }
   const records = {};
   selects.forEach(sel => { records[sel.dataset.sid] = sel.value; });
+  const cleanDiv = divVal === '__NO_DIV__' ? '' : divVal;
   try{
     $('saveAttBtn').disabled = true;
-    await setDoc(doc(db,'attendance',`${dt}_${cls}`), {date:dt, className:cls, records, updatedAt:new Date().toISOString()});
-    await logSecurityAudit('Save Attendance', `Marked attendance for Class ${cls} on ${dt}`);
-    showMsg('attMsg','Attendance saved successfully!','success');
+    await setDoc(doc(db,'attendance',`${dt}_${cls}_${divVal}`), {
+      date: dt,
+      className: cls,
+      division: cleanDiv,
+      records,
+      updatedAt: new Date().toISOString()
+    });
+    await logSecurityAudit('Save Attendance', `Marked attendance for Class ${cls} Div ${cleanDiv || 'None'} on ${dt}`);
+    showMsg('attMsg',`Class ${cls} (${cleanDiv || 'No Div'}) Attendance saved successfully!`,'success');
     await loadAll();
   }catch(e){ showMsg('attMsg','Error: '+e.message,'error'); }
   finally{ $('saveAttBtn').disabled = false; }
@@ -4047,7 +4299,8 @@ window.renderFeeReport = function(){
 
 window.exportActiveFeeReportCSV = function(){
   const csv = [activeReportHeaders, ...activeReportRows]
-    .map(r => r.map(v => `"${String(v??'').replace(/"/g,'""')}"`).join(',')).join('\n');
+    .map(r => r.map(v => `"${String(v??'').replace(/"/g,'""')}"`).join(',')).join('
+');
   const blob = new Blob([csv], {type:'text/csv;charset=utf-8;'});
   const a = document.createElement('a');
   a.href = URL.createObjectURL(blob);
@@ -4242,7 +4495,8 @@ window.renderManualReport = function(){
 
 window.exportManualCSV = function(){
   const csv = [manualHeaders, ...manualRowsData]
-    .map(r => r.map(v => `"${String(v??'').replace(/"/g,'""')}"`).join(',')).join('\n');
+    .map(r => r.map(v => `"${String(v??'').replace(/"/g,'""')}"`).join(',')).join('
+');
   const blob = new Blob([csv], {type:'text/csv;charset=utf-8;'});
   const a = document.createElement('a');
   a.href = URL.createObjectURL(blob);
@@ -4266,7 +4520,8 @@ window.exportCSV = function(type){
       rows.push([a.date, a.className, name, st]);
     }));
   }
-  const csv = rows.map(r => r.map(v => `"${String(v??'').replace(/"/g,'""')}"`).join(',')).join('\n');
+  const csv = rows.map(r => r.map(v => `"${String(v??'').replace(/"/g,'""')}"`).join(',')).join('
+');
   const blob = new Blob([csv], {type:'text/csv;charset=utf-8;'});
   const a = document.createElement('a');
   a.href = URL.createObjectURL(blob);
