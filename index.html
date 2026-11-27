@@ -1,4 +1,4 @@
- <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -605,30 +605,32 @@ header h2{
       <button type="button" class="role-tab" onclick="switchRoleTab('parent',this)">Parents</button>
     </div>
 
-    <!-- Admin Login -->
+    <!-- Admin Login (Firebase Email/Password Authentication) -->
     <div id="form-admin" class="role-form active">
-      <label for="adminUser">Admin Username</label>
-      <input id="adminUser" placeholder="Enter admin username">
-      <label for="adminPass" style="margin-top:12px">Admin Password</label>
-      <input id="adminPass" type="password" placeholder="Enter password" onkeydown="if(event.key==='Enter')loginAdmin()">
+      <label for="adminUser">Admin Email *</label>
+      <input id="adminUser" type="email" placeholder="e.g. admin@kyhss.in">
+      <label for="adminPass" style="margin-top:12px">Admin Password *</label>
+      <input id="adminPass" type="password" placeholder="Enter Firebase password" onkeydown="if(event.key==='Enter')loginAdmin()">
       <div class="actions"><button type="button" class="btn" id="adminLoginBtn" onclick="loginAdmin()" style="width:100%;justify-content:center">Admin Login</button></div>
     </div>
 
     <!-- Staff / Office Staff Login -->
     <div id="form-staff" class="role-form">
-      <label for="staffLoginId">Staff Username / Mobile Number</label>
-      <input id="staffLoginId" placeholder="Office Staff Username or Mobile No.">
-      <label for="staffLoginPass" style="margin-top:12px">Password (for Office Staff ID login)</label>
+      <label for="staffLoginId">Office Email OR Staff Mobile No. *</label>
+      <input id="staffLoginId" placeholder="Office Email (e.g. office@kyhss.in) or Mobile No.">
+      <label for="staffLoginPass" style="margin-top:12px">Password (Required for Office Email login)</label>
       <input id="staffLoginPass" type="password" placeholder="Leave blank if logging in with Mobile No." onkeydown="if(event.key==='Enter')loginStaff()">
       <div class="actions"><button type="button" class="btn teal" id="staffLoginBtn" onclick="loginStaff()" style="width:100%;justify-content:center">Staff Login</button></div>
     </div>
 
-    <!-- Parents Login -->
+    <!-- Parents Login (With 4-Digit Security PIN) -->
     <div id="form-parent" class="role-form">
-      <label for="parentAdmNo">Student Admission Number</label>
+      <label for="parentAdmNo">Student Admission Number *</label>
       <input id="parentAdmNo" placeholder="e.g. 1001">
-      <label for="parentPhone" style="margin-top:12px">Parent Mobile Number</label>
-      <input id="parentPhone" type="tel" placeholder="Registered parent mobile number" onkeydown="if(event.key==='Enter')loginParent()">
+      <label for="parentPhone" style="margin-top:10px">Registered Parent Mobile Number *</label>
+      <input id="parentPhone" type="tel" placeholder="10-digit mobile number">
+      <label for="parentPin" style="margin-top:10px">4-Digit Parent Security PIN *</label>
+      <input id="parentPin" type="password" maxlength="6" placeholder="Default: last 4 digits of mobile no." onkeydown="if(event.key==='Enter')loginParent()">
       <div class="actions"><button type="button" class="btn" id="parentLoginBtn" onclick="loginParent()" style="width:100%;justify-content:center">Parent Login</button></div>
     </div>
 
@@ -644,7 +646,7 @@ header h2{
       <div><h1>KYHSS</h1><span id="sidebarSub">School Management</span></div>
     </div>
     <nav id="sideNav"></nav>
-    <div class="sidebar-foot">KYHSS ATHAVANAD<br>Connected to Firestore</div>
+    <div class="sidebar-foot">KYHSS ATHAVANAD<br>🔒 Secured with Firebase Auth</div>
   </aside>
 
   <div class="workspace">
@@ -744,7 +746,8 @@ header h2{
             <div><label>Father / Parent Name</label><input id="parentName" placeholder="Parent name"></div>
             <div><label>Mother Name</label><input id="motherName" placeholder="Mother name"></div>
             <div><label>Mobile Number</label><input id="phone" type="tel" placeholder="Mobile number"></div>
-            <div><label>Address</label><input id="address" placeholder="House / Post / Pin"></div>
+            <div><label>Parent Portal PIN (4 Digits)</label><input id="parentPinSet" maxlength="6" placeholder="Leave blank for last 4 digits of mobile"></div>
+            <div style="grid-column:1/-1"><label>Address</label><input id="address" placeholder="House / Post / Pin"></div>
             <div style="grid-column:1/-1">
               <label>Admission Photo</label>
               <div class="photo-preview-box">
@@ -808,7 +811,7 @@ header h2{
             <div style="display:flex;gap:8px;flex-wrap:wrap">
               <button type="button" class="back-arrow-btn" onclick="closeStudentFullProfile()">← Search Another</button>
               <button type="button" class="btn smallbtn sec admin-only" onclick="editStudentFromProfile()">✏️ Edit</button>
-              <button type="button" class="btn smallbtn danger admin-only" onclick="deleteStudentFromProfile()">🗑️ Delete</button>
+              <button type="button" class="btn smallbtn danger admin-only" onclick="deleteStudentFromProfile()">🗑️ Archive</button>
               <button type="button" class="btn smallbtn" onclick="downloadStudentFile()">⬇ Download File</button>
               <button type="button" class="btn smallbtn teal" onclick="printAdmissionFormA4()">🖨️ Print (Admission Form A4)</button>
             </div>
@@ -1470,7 +1473,7 @@ header h2{
       <section id="view-reports" class="view">
         <div class="tab-back-bar no-print">
           <button type="button" class="back-arrow-btn" onclick="backFromModule()">← Back</button>
-          <span style="font-size:13px;font-weight:600;color:var(--muted)">Manual Report Builder</span>
+          <span style="font-size:13px;font-weight:600;color:var(--muted)">Manual Report Builder & Security Audit Log</span>
         </div>
 
         <div class="card no-print">
@@ -1484,7 +1487,7 @@ header h2{
                 <option value="marks">Exam Marks</option>
                 <option value="attendance">Attendance Logs</option>
                 <option value="staff">Staff Directory</option>
-                <option value="bus">Class Bus Assignments</option>
+                <option value="audit">🔒 Security Audit Logs</option>
               </select>
             </div>
             <div>
@@ -1565,7 +1568,7 @@ header h2{
   </div>
 </div>
 
-<!-- CREATE FEE MODAL (Triggered by CREATE FEE button) -->
+<!-- CREATE FEE MODAL -->
 <div id="createFeeModal" class="modal-backdrop" onclick="if(event.target===this)closeCreateFeeModal()">
   <div class="modal-card">
     <h3 style="margin:0 0 12px">Create New Fee for Student</h3>
@@ -1716,7 +1719,8 @@ header h2{
 
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-app.js";
-import { getFirestore, collection, addDoc, getDocs, doc, updateDoc, deleteDoc, setDoc, getDoc, query, orderBy } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-firestore.js";
+import { getFirestore, collection, addDoc, getDocs, doc, updateDoc, setDoc, getDoc, query, orderBy } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-firestore.js";
+import { getAuth, signInWithEmailAndPassword, signOut } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-auth.js";
 
 const firebaseConfig = {
   apiKey: "AIzaSyBOZjtLr_DbfZCHClayZSWRCxFxQqGWv-8",
@@ -1729,20 +1733,20 @@ const firebaseConfig = {
 };
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
+const auth = getAuth(app);
 
 let students = [], staffList = [], attendanceLogs = [], examsList = [], marks = [], subjectAllocs = [],
-    fees = [], feeCategories = [], feeStructures = [], busRoutes = [], busAssignments = [], timetable = [], notices = [];
+    fees = [], feeCategories = [], feeStructures = [], busRoutes = [], busAssignments = [], timetable = [], notices = [], auditLogs = [];
 let feeSettings = { schoolName: 'KYHSS ATHAVANAD', batch: '2026-2027', currency: '₹', autoAssign: true, nextReceiptNo: 1, receiptPrefix: '' };
-let officeStaffConfig = { name: 'Office Staff', username: '', password: '' };
 let editingStudentId = null, editingStructId = null, editingCatId = null, currentPhotoBase64 = '';
 let manualHeaders = [], manualRowsData = [];
 let activeSession = null;
 let selectedErpStudentId = '';
-let activeSiblingIds = []; // Selected sibling IDs to manage alongside main selected student
-let selectedFeeIds = new Set(); // Checked fee row IDs for payment
+let activeSiblingIds = [];
+let selectedFeeIds = new Set();
 let collapsedMonths = new Set();
 let isSubmittingPayment = false;
-let generatedReceiptBatch = []; // Holds student-wise generated receipts from latest payment
+let generatedReceiptBatch = [];
 let activeProfileStudentId = '';
 let activeReportHeaders = [], activeReportRows = [];
 
@@ -1752,6 +1756,22 @@ if($('todayDate')) $('todayDate').textContent = new Date().toLocaleDateString('e
 if($('attDate')) $('attDate').value = todayISO;
 if($('newExamDate')) $('newExamDate').value = todayISO;
 if($('payPanelDate')) $('payPanelDate').value = todayISO;
+
+/* --- SECURITY AUDIT LOG HELPER --- */
+async function logSecurityAudit(action, details){
+  try{
+    const entry = {
+      action,
+      details,
+      performedBy: currentUserName(),
+      role: activeSession?.role || 'guest',
+      timestamp: new Date().toISOString(),
+      date: todayISO
+    };
+    await addDoc(collection(db, 'audit_logs'), entry);
+    auditLogs.unshift(entry);
+  }catch(e){}
+}
 
 /* --- IMAGE FILE PICKERS --- */
 function compressImageFile(file, maxW, quality, callback){
@@ -1852,6 +1872,7 @@ $('profilePhotoInput')?.addEventListener('change', (e) => {
         photo: b64,
         updatedAt: new Date().toISOString()
       });
+      await logSecurityAudit('Update Student Photo', `Updated photo for student ID ${activeProfileStudentId}`);
       await loadStudents();
       openStudentFullProfile(activeProfileStudentId);
     }catch(err){
@@ -1876,8 +1897,10 @@ function showMsg(elId, msg, type){
 /* --- LOGOUT CONFIRMATION --- */
 window.openLogoutConfirm = function(){ $('logoutModal').classList.add('active'); };
 window.closeLogoutConfirm = function(){ $('logoutModal').classList.remove('active'); };
-window.confirmLogoutNow = function(){
+window.confirmLogoutNow = async function(){
   closeLogoutConfirm();
+  await logSecurityAudit('Logout', `User ${currentUserName()} logged out`);
+  try{ await signOut(auth); }catch(e){}
   activeSession = null;
   activeProfileStudentId = '';
   selectedErpStudentId = '';
@@ -1885,6 +1908,7 @@ window.confirmLogoutNow = function(){
   selectedFeeIds.clear();
   $('adminPass').value = '';
   $('staffLoginPass').value = '';
+  $('parentPin').value = '';
   $('portalShell').classList.remove('active');
   $('loginScreen').style.display = 'flex';
 };
@@ -1900,7 +1924,7 @@ async function allocateNextReceiptNumber(){
   return formattedNo;
 }
 
-/* --- LOGIN & ROLE PORTAL --- */
+/* --- SECURE LOGIN (FIREBASE AUTH FOR ADMIN/OFFICE + PIN FOR PARENTS) --- */
 window.switchRoleTab = function(role, btn){
   document.querySelectorAll('.role-tab').forEach(b => b.classList.remove('active'));
   document.querySelectorAll('.role-form').forEach(f => f.classList.remove('active'));
@@ -1909,37 +1933,21 @@ window.switchRoleTab = function(role, btn){
   $('loginMsg').textContent = '';
 };
 
-async function fetchOfficeStaffConfig(){
-  try{
-    const snap = await getDoc(doc(db, 'office_staff_config', 'login'));
-    if(snap.exists()) officeStaffConfig = { name: 'Office Staff', username: '', password: '', ...snap.data() };
-  }catch(e){}
-}
-
 window.loginAdmin = async function(){
   $('loginMsg').textContent = '';
-  const username = ($('adminUser').value || '').trim().toLowerCase();
+  const email = ($('adminUser').value || '').trim();
   const pass = ($('adminPass').value || '').trim();
-  if(!username || !pass){ $('loginMsg').textContent = 'Admin Username, Password എന്നിവ നൽകുക.'; return; }
+  if(!email || !pass){ $('loginMsg').textContent = 'Admin Email-ഉം Password-ഉം നൽകുക.'; return; }
 
   const btn = $('adminLoginBtn');
   btn.disabled = true;
   try{
-    let validUser = 'admin', validPass = 'kyhss123';
-    try{
-      const cfgSnap = await getDoc(doc(db, 'admin_config', 'auth'));
-      if(cfgSnap.exists()){
-        const d = cfgSnap.data();
-        if(d.username !== undefined) validUser = String(d.username).trim().toLowerCase();
-        if(d.password !== undefined) validPass = String(d.password).trim();
-      }
-    }catch(e){}
-
-    if(username === validUser && pass === validPass){
-      await enterSession({ role: 'admin', label: 'KYHSS Admin', userName: username });
-    } else {
-      $('loginMsg').textContent = 'Admin Username അല്ലെങ്കിൽ Password ശരിയല്ല.';
-    }
+    const cred = await signInWithEmailAndPassword(auth, email, pass);
+    const displayName = cred.user.email || email;
+    await enterSession({ role: 'admin', label: 'KYHSS Admin', userName: displayName, uid: cred.user.uid });
+    await logSecurityAudit('Admin Login', `Authenticated via Firebase Auth (${displayName})`);
+  }catch(e){
+    $('loginMsg').textContent = 'ലോഗിൻ പരാജയപ്പെട്ടു: Email അല്ലെങ്കിൽ Password ശരിയല്ല.';
   }finally{ btn.disabled = false; }
 };
 
@@ -1947,35 +1955,31 @@ window.loginStaff = async function(){
   $('loginMsg').textContent = '';
   const idInput = ($('staffLoginId').value || '').trim();
   const passInput = ($('staffLoginPass').value || '').trim();
-  if(!idInput){ $('loginMsg').textContent = 'Staff Username അല്ലെങ്കിൽ Mobile Number നൽകുക.'; return; }
+  if(!idInput){ $('loginMsg').textContent = 'Office Email അല്ലെങ്കിൽ Staff Mobile Number നൽകുക.'; return; }
 
   const btn = $('staffLoginBtn');
   btn.disabled = true;
   try{
-    await fetchOfficeStaffConfig();
-    const cfgUser = String(officeStaffConfig.username || '').trim().toLowerCase();
-    const cfgPass = String(officeStaffConfig.password || '').trim();
-    const cfgName = String(officeStaffConfig.name || 'Office Staff').trim();
-
-    if(cfgUser && idInput.toLowerCase() === cfgUser){
-      if(!passInput || passInput !== cfgPass){
-        $('loginMsg').textContent = 'Office Staff Password ശരിയല്ല.';
-        return;
-      }
-      await enterSession({ role: 'office', label: `Office: ${cfgName}`, userName: cfgName });
+    if(idInput.includes('@')){
+      if(!passInput){ $('loginMsg').textContent = 'Office Email ലോഗിൻ ചെയ്യാൻ Password നൽകുക.'; return; }
+      const cred = await signInWithEmailAndPassword(auth, idInput, passInput);
+      const displayName = cred.user.email || idInput;
+      await enterSession({ role: 'office', label: `Office: ${displayName}`, userName: displayName, uid: cred.user.uid });
+      await logSecurityAudit('Office Staff Login', `Authenticated via Firebase Auth (${displayName})`);
       return;
     }
 
     const snap = await getDocs(collection(db, 'staff'));
-    const list = snap.docs.map(d => ({id:d.id, ...d.data()}));
+    const list = snap.docs.map(d => ({id:d.id, ...d.data()})).filter(x => x.isArchived !== true);
     const found = list.find(st => String(st.phone||'').trim() === idInput);
     if(!found){
-      $('loginMsg').textContent = 'Username / Password അല്ലെങ്കിൽ Mobile Number കണ്ടെത്തിയില്ല.';
+      $('loginMsg').textContent = 'നൽകിയ Email അല്ലെങ്കിൽ Staff Mobile Number കണ്ടെത്തിയില്ല.';
       return;
     }
     await enterSession({ role: 'staff', label: `Staff: ${found.name}`, userName: found.name, staff: found });
+    await logSecurityAudit('Staff Login', `Teacher logged in (${found.name})`);
   }catch(e){
-    $('loginMsg').textContent = 'Staff login error: ' + e.message;
+    $('loginMsg').textContent = 'Staff login error: Email അല്ലെങ്കിൽ Password ശരിയല്ല.';
   }finally{ btn.disabled = false; }
 };
 
@@ -1983,15 +1987,28 @@ window.loginParent = async function(){
   $('loginMsg').textContent = '';
   const adm = ($('parentAdmNo').value || '').trim().toLowerCase();
   const phone = ($('parentPhone').value || '').trim();
-  if(!adm || !phone){ $('loginMsg').textContent = 'Admission Number, Parent Mobile Number എന്നിവ നൽകുക.'; return; }
+  const pinInput = ($('parentPin').value || '').trim();
+  if(!adm || !phone || !pinInput){
+    $('loginMsg').textContent = 'Admission Number, Mobile Number, 4-Digit Security PIN എന്നിവ നൽകുക.';
+    return;
+  }
 
   const btn = $('parentLoginBtn');
   btn.disabled = true;
   try{
     const snap = await getDocs(collection(db, 'students'));
-    const list = snap.docs.map(d => ({id:d.id, ...d.data()}));
+    const list = snap.docs.map(d => ({id:d.id, ...d.data()})).filter(x => x.isArchived !== true);
     const found = list.find(s => String(s.admissionNo||'').trim().toLowerCase() === adm && String(s.phone||'').trim() === phone);
-    if(!found){ $('loginMsg').textContent = 'Admission Number അല്ലെങ്കിൽ Parent Mobile Number ശരിയല്ല.'; return; }
+    if(!found){
+      $('loginMsg').textContent = 'Admission Number അല്ലെങ്കിൽ Parent Mobile Number ശരിയല്ല.';
+      return;
+    }
+    const cleanDigits = phone.replace(/\D/g, '');
+    const expectedPin = String(found.parentPin || cleanDigits.slice(-4) || '').trim();
+    if(pinInput !== expectedPin){
+      $('loginMsg').textContent = 'Security PIN ശരിയല്ല. (Default PIN: മൊബൈൽ നമ്പറിന്റെ അവസാന 4 അക്കങ്ങൾ)';
+      return;
+    }
     await enterSession({ role: 'parent', label: `Parent (${found.name})`, userName: `Parent of ${found.name}`, student: found });
   }catch(e){
     $('loginMsg').textContent = 'Parent login error: ' + e.message;
@@ -2129,7 +2146,7 @@ window.switchView = function(name, btn){
   if(name === 'parent-home') renderParentPortal();
 };
 
-/* --- FINANCE SUB-TABS (1. Fee Category, 2. Fee Structure, 3. Fee Collection, 4. Report, 5. Settings) --- */
+/* --- FINANCE SUB-TABS --- */
 window.switchFinanceTab = function(tab, btn){
   document.querySelectorAll('#view-finance .fee-panel').forEach(p => p.classList.remove('active'));
   document.querySelectorAll('#financeSubTabs .subtab-btn').forEach(b => b.classList.remove('active'));
@@ -2186,10 +2203,9 @@ function detectFeeGroup(f){
   return 'General';
 }
 
-/* --- LOAD ALL DATA --- */
+/* --- LOAD ALL DATA (EXCLUDING SOFT-DELETED / ARCHIVED ITEMS) --- */
 async function loadAll(){
   await Promise.all([
-    fetchOfficeStaffConfig(),
     loadFeeSettings(),
     loadStudents(),
     loadStaff(),
@@ -2203,7 +2219,8 @@ async function loadAll(){
     loadSubjectAllocs(),
     loadMarks(),
     loadTimetable(),
-    loadNotices()
+    loadNotices(),
+    loadAuditLogs()
   ]);
   populateCategoryDatalist();
   populateSettingsInputs();
@@ -2213,6 +2230,14 @@ async function loadAll(){
   renderSearchStudentsDirectory();
   if(activeProfileStudentId) openStudentFullProfile(activeProfileStudentId);
   if(activeSession?.role === 'parent') renderParentPortal();
+}
+
+async function loadAuditLogs(){
+  try{
+    const snap = await getDocs(collection(db, 'audit_logs'));
+    auditLogs = snap.docs.map(d => ({id:d.id, ...d.data()}))
+      .sort((a,b) => String(b.timestamp || '').localeCompare(String(a.timestamp || '')));
+  }catch(e){}
 }
 
 /* --- 5. FEE SETTINGS (FEE SETTINGS ONLY) --- */
@@ -2246,6 +2271,7 @@ window.saveFeeSettings = async function(){
   };
   try{
     await setDoc(doc(db, 'fee_settings', 'default'), feeSettings);
+    await logSecurityAudit('Update Fee Settings', `Updated receipt/batch settings`);
     showMsg('setMsg', 'Fee settings saved successfully!', 'success');
     renderFeeReport(); renderErpStudentWorkspace(); updateDashboard();
   }catch(e){ showMsg('setMsg', 'Error: ' + e.message, 'error'); }
@@ -2255,7 +2281,7 @@ window.saveFeeSettings = async function(){
 async function loadFeeCategories(){
   try{
     const snap = await getDocs(collection(db, 'fee_categories'));
-    feeCategories = snap.docs.map(d => ({id:d.id, ...d.data()}))
+    feeCategories = snap.docs.map(d => ({id:d.id, ...d.data()})).filter(x => x.isArchived !== true)
       .sort((a,b) => String(a.name).localeCompare(String(b.name)));
     renderFeeCategories();
     populateCategoryDatalist();
@@ -2329,7 +2355,7 @@ function renderFeeCategories(){
     <td>${esc(c.description || '-')}</td>
     <td class="no-print admin-only" style="${canEdit?'':'display:none'}">
       <button type="button" class="iconbtn" title="Edit" onclick="editFeeCategory('${c.id}')">✏️</button>
-      <button type="button" class="iconbtn del" title="Delete" onclick="delDoc('fee_categories','${c.id}')">🗑️</button>
+      <button type="button" class="iconbtn del" title="Archive" onclick="softArchiveDoc('fee_categories','${c.id}')">🗑️</button>
     </td>
   </tr>`).join('');
 }
@@ -2342,7 +2368,7 @@ window.toggleStructClasses = function(checked){
 async function loadFeeStructures(){
   try{
     const snap = await getDocs(collection(db, 'fee_structures'));
-    feeStructures = snap.docs.map(d => ({id:d.id, ...d.data()}))
+    feeStructures = snap.docs.map(d => ({id:d.id, ...d.data()})).filter(x => x.isArchived !== true)
       .sort((a,b) => String(a.className).localeCompare(String(b.className), undefined, {numeric:true}));
     renderFeeStructures();
   }catch(e){}
@@ -2365,7 +2391,6 @@ async function applyStructureRuleToExistingStudents(rule){
   let added = 0, updated = 0;
 
   for(const st of matchingStudents){
-    // Check if student already has a PAID record or completed receipt for this exact rule
     const hasCompletedPayment = fees.some(f =>
       f.studentId === st.id &&
       String(f.className) === String(rule.className) &&
@@ -2374,9 +2399,8 @@ async function applyStructureRuleToExistingStudents(rule){
       String(f.batch || targetBatch) === targetBatch &&
       (f.status === 'Paid' || Number(f.paidAmount || 0) > 0)
     );
-    if(hasCompletedPayment) continue; // Never overwrite existing paid amounts, payment history, or receipts
+    if(hasCompletedPayment) continue;
 
-    // Check if an unpaid pending fee already exists for this rule
     const existingPending = fees.find(f =>
       f.studentId === st.id &&
       String(f.className) === String(rule.className) &&
@@ -2458,6 +2482,7 @@ window.saveFeeStructure = async function(){
       const payload = { id: editingStructId, className, division, title, period, batch, amount, concession, updatedAt: new Date().toISOString() };
       await updateDoc(doc(db, 'fee_structures', editingStructId), payload);
       const res = await applyStructureRuleToExistingStudents(payload);
+      await logSecurityAudit('Update Fee Structure', `Class ${className} - ${title} (${fmtMoney(amount)})`);
       showMsg('structMsg', `Class ${className} Fee Structure updated & applied! (${res.added} added, ${res.updated} updated for students)`, 'success');
     } else {
       const selectedClasses = [...document.querySelectorAll('#structClassCheckboxes input[type="checkbox"]:checked')].map(cb => cb.value);
@@ -2467,7 +2492,6 @@ window.saveFeeStructure = async function(){
       }
       let totalAdded = 0, totalUpdated = 0;
       for(const cls of selectedClasses){
-        // Prevent duplicate fee structure for same Class + Division + Category + Period + Batch
         const dupStruct = feeStructures.find(fs =>
           String(fs.className) === String(cls) &&
           String(fs.division || '').trim().toLowerCase() === division.toLowerCase() &&
@@ -2497,6 +2521,7 @@ window.saveFeeStructure = async function(){
         totalAdded += res.added;
         totalUpdated += res.updated;
       }
+      await logSecurityAudit('Create Fee Structure', `${title} (${fmtMoney(amount)}) for Classes: ${selectedClasses.join(', ')}`);
       showMsg('structMsg', `${selectedClasses.length} class(es)-ന് Fee Structure സേവ് ചെയ്ത് വിദ്യാർത്ഥികൾക്ക് apply ചെയ്തു! (${totalAdded} added, ${totalUpdated} updated)`, 'success');
     }
     clearStructForm(false);
@@ -2579,7 +2604,7 @@ window.renderFeeStructures = function(){
     <td>${fmtMoney(fs.concession || 0)}</td>
     <td class="no-print admin-only" style="${canEdit?'':'display:none'}">
       <button type="button" class="iconbtn" title="Edit" onclick="editFeeStructure('${fs.id}')">✏️</button>
-      <button type="button" class="iconbtn del" title="Delete" onclick="delDoc('fee_structures','${fs.id}')">🗑️</button>
+      <button type="button" class="iconbtn del" title="Archive" onclick="softArchiveDoc('fee_structures','${fs.id}')">🗑️</button>
     </td>
   </tr>`).join('');
 };
@@ -2588,14 +2613,14 @@ window.renderFeeStructures = function(){
 async function loadBusRoutes(){
   try{
     const snap = await getDocs(collection(db, 'bus_routes'));
-    busRoutes = snap.docs.map(d => ({id:d.id, ...d.data()}));
+    busRoutes = snap.docs.map(d => ({id:d.id, ...d.data()})).filter(x => x.isArchived !== true);
   }catch(e){}
 }
 
 async function loadBusAssignments(){
   try{
     const snap = await getDocs(collection(db, 'bus_assignments'));
-    busAssignments = snap.docs.map(d => ({id:d.id, ...d.data()}));
+    busAssignments = snap.docs.map(d => ({id:d.id, ...d.data()})).filter(x => x.isArchived !== true);
   }catch(e){}
 }
 
@@ -2688,13 +2713,16 @@ window.saveStudent = async function(){
     showMsg('formMsg','ഈ Admission Number ഇതിനകം നിലവിലുണ്ട്.','error'); return;
   }
   const division = $('division').value.trim();
+  const phone = $('phone').value.trim();
+  const customPin = $('parentPinSet')?.value.trim() || '';
   const data = {
     admissionNo, name, className, division,
     gender: $('gender').value,
     dob: $('dob').value,
     parentName: $('parentName').value.trim(),
     motherName: $('motherName').value.trim(),
-    phone: $('phone').value.trim(),
+    phone,
+    parentPin: customPin || phone.replace(/\D/g,'').slice(-4) || '',
     address: $('address').value.trim(),
     photo: currentPhotoBase64 || '',
     updatedAt: new Date().toISOString()
@@ -2704,10 +2732,12 @@ window.saveStudent = async function(){
     let savedId = editingStudentId;
     if(editingStudentId){
       await updateDoc(doc(db,'students',editingStudentId), data);
+      await logSecurityAudit('Edit Student', `Updated student ${name} (Adm: ${admissionNo})`);
     } else {
       data.createdAt = new Date().toISOString();
       const ref = await addDoc(collection(db,'students'), data);
       savedId = ref.id;
+      await logSecurityAudit('New Admission', `Added student ${name} (Adm: ${admissionNo}, Class: ${className})`);
     }
     await loadFees();
     await assignClassFeesToStudent(savedId, name, className, division);
@@ -2810,8 +2840,10 @@ window.editStudentFromProfile = function(){
 window.deleteStudentFromProfile = async function(){
   if(!activeProfileStudentId) return;
   const id = activeProfileStudentId;
-  if(!confirm('ഈ വിദ്യാർത്ഥിയുടെ record delete ചെയ്യണോ?')) return;
+  const st = students.find(x => x.id === id);
+  if(!confirm('ഈ വിദ്യാർത്ഥിയുടെ record archive ചെയ്യണോ?')) return;
   await updateDoc(doc(db,'students',id), { isArchived:true, archivedAt:new Date().toISOString() });
+  await logSecurityAudit('Archive Student', `Archived student ${st?.name || id}`);
   activeProfileStudentId = '';
   if(selectedErpStudentId === id) selectedErpStudentId = '';
   await loadAll();
@@ -2835,7 +2867,8 @@ window.downloadStudentFile = function(){
     `Mother Name      : ${st.motherName || ''}`,
     `Mobile Number    : ${st.phone || ''}`,
     `Address          : ${st.address || ''}`
-  ].join('\n');
+  ].join('
+');
   const blob = new Blob([content], { type: 'text/plain;charset=utf-8;' });
   const a = document.createElement('a');
   a.href = URL.createObjectURL(blob);
@@ -2855,7 +2888,9 @@ window.editStudent = function(id){
   $('admissionNo').value = s.admissionNo||''; $('studentName').value = s.name||''; $('className').value = s.className||'';
   $('division').value = s.division||''; $('gender').value = s.gender||''; $('dob').value = s.dob||'';
   $('parentName').value = s.parentName||''; $('motherName').value = s.motherName||'';
-  $('phone').value = s.phone||''; $('address').value = s.address||'';
+  $('phone').value = s.phone||'';
+  if($('parentPinSet')) $('parentPinSet').value = s.parentPin||'';
+  $('address').value = s.address||'';
   currentPhotoBase64 = s.photo || '';
   setPhotoPreview(currentPhotoBase64, currentPhotoBase64 ? 'Saved photo loaded' : 'No photo selected');
   $('saveBtn').textContent = 'Update Student';
@@ -2863,8 +2898,10 @@ window.editStudent = function(id){
 };
 
 window.removeStudent = async function(id){
-  if(!confirm('ഈ വിദ്യാർത്ഥിയുടെ record delete ചെയ്യണോ?')) return;
-  await deleteDoc(doc(db,'students',id));
+  const st = students.find(x => x.id === id);
+  if(!confirm('ഈ വിദ്യാർത്ഥിയുടെ record archive ചെയ്യണോ?')) return;
+  await updateDoc(doc(db,'students',id), { isArchived: true, archivedAt: new Date().toISOString() });
+  await logSecurityAudit('Archive Student', `Archived student ${st?.name || id}`);
   if(selectedErpStudentId === id) selectedErpStudentId = '';
   if(activeProfileStudentId === id) closeStudentFullProfile();
   await loadAll();
@@ -2873,6 +2910,7 @@ window.removeStudent = async function(id){
 window.clearForm = function(clearMsg=true){
   editingStudentId = null; $('formTitle').textContent = 'Student Admission Form'; $('saveBtn').textContent = 'Save Student';
   ['admissionNo','studentName','division','dob','parentName','motherName','phone','address'].forEach(id => $(id).value = '');
+  if($('parentPinSet')) $('parentPinSet').value = '';
   $('className').value = ''; $('gender').value = '';
   clearStudentPhoto();
   if(clearMsg) $('formMsg').textContent = '';
@@ -2899,7 +2937,7 @@ window.renderStudents = function(){
     <td>${esc(s.phone||'-')}</td>
     <td class="no-print admin-only" style="${canEdit?'':'display:none'}">
       <button type="button" class="iconbtn" title="Edit" onclick="editStudent('${s.id}')">✏️</button>
-      <button type="button" class="iconbtn del" title="Delete" onclick="removeStudent('${s.id}')">🗑️</button>
+      <button type="button" class="iconbtn del" title="Archive" onclick="removeStudent('${s.id}')">🗑️</button>
     </td>
   </tr>`).join('');
 };
@@ -2908,7 +2946,7 @@ window.renderStudents = function(){
 async function loadStaff(){
   try{
     const snap = await getDocs(collection(db,'staff'));
-    staffList = snap.docs.map(d => ({id:d.id, ...d.data()}));
+    staffList = snap.docs.map(d => ({id:d.id, ...d.data()})).filter(x => x.isArchived !== true);
     const canEdit = activeSession?.role === 'admin' || activeSession?.role === 'office';
     if(!staffList.length){ $('staffRows').innerHTML = '<tr><td colspan="6">No staff members added yet.</td></tr>'; return; }
     $('staffRows').innerHTML = staffList.map(st => `<tr>
@@ -2917,7 +2955,7 @@ async function loadStaff(){
       <td>${esc(st.dept||'-')}</td>
       <td>${esc(st.phone)}</td>
       <td>${esc(st.qual||'-')}</td>
-      <td class="no-print admin-only" style="${canEdit?'':'display:none'}"><button type="button" class="iconbtn del" title="Delete" onclick="delDoc('staff','${st.id}')">🗑️</button></td>
+      <td class="no-print admin-only" style="${canEdit?'':'display:none'}"><button type="button" class="iconbtn del" title="Archive" onclick="softArchiveDoc('staff','${st.id}')">🗑️</button></td>
     </tr>`).join('');
   }catch(e){}
 }
@@ -2927,6 +2965,7 @@ window.saveStaff = async function(){
   if(!name || !role || !phone){ showMsg('staffMsg','Name, Role, Mobile Number എന്നിവ നിർബന്ധമാണ്.','error'); return; }
   try{
     await addDoc(collection(db,'staff'), { name, role, dept:$('staffDept').value.trim(), phone, qual:$('staffQual').value.trim(), createdAt:new Date().toISOString() });
+    await logSecurityAudit('Add Staff', `Added staff member ${name} (${role})`);
     $('staffName').value=''; $('staffRole').value=''; $('staffDept').value=''; $('staffPhone').value=''; $('staffQual').value='';
     showMsg('staffMsg','Staff added successfully!','success');
     await loadStaff();
@@ -2976,6 +3015,7 @@ window.saveAttendance = async function(){
   try{
     $('saveAttBtn').disabled = true;
     await setDoc(doc(db,'attendance',`${dt}_${cls}`), {date:dt, className:cls, records, updatedAt:new Date().toISOString()});
+    await logSecurityAudit('Save Attendance', `Marked attendance for Class ${cls} on ${dt}`);
     showMsg('attMsg','Attendance saved successfully!','success');
     await loadAll();
   }catch(e){ showMsg('attMsg','Error: '+e.message,'error'); }
@@ -2986,7 +3026,7 @@ window.saveAttendance = async function(){
 async function loadExams(){
   try{
     const snap = await getDocs(collection(db,'exams'));
-    examsList = snap.docs.map(d => ({id:d.id, ...d.data()}));
+    examsList = snap.docs.map(d => ({id:d.id, ...d.data()})).filter(x => x.isArchived !== true);
     renderCreatedExams();
     populateExamSelectForMarks();
   }catch(e){}
@@ -3013,7 +3053,7 @@ function renderCreatedExams(){
     <td>${esc(ex.date)}</td>
     <td>
       <button type="button" class="btn smallbtn teal" onclick="openExamInMarksTab('${ex.id}')">Enter Marks</button>
-      <button type="button" class="iconbtn del" title="Delete" onclick="delDoc('exams','${ex.id}')">🗑️</button>
+      <button type="button" class="iconbtn del" title="Archive" onclick="softArchiveDoc('exams','${ex.id}')">🗑️</button>
     </td>
   </tr>`).join('');
 }
@@ -3045,14 +3085,14 @@ window.onExamSelectedForMarks = function(){
 async function loadSubjectAllocs(){
   try{
     const snap = await getDocs(collection(db,'subject_allocations'));
-    subjectAllocs = snap.docs.map(d => ({id:d.id, ...d.data()}));
+    subjectAllocs = snap.docs.map(d => ({id:d.id, ...d.data()})).filter(x => x.isArchived !== true);
     const canEdit = activeSession?.role === 'admin' || activeSession?.role === 'office';
     if(!subjectAllocs.length){ $('allocRows').innerHTML = '<tr><td colspan="4">No subjects allocated yet.</td></tr>'; return; }
     $('allocRows').innerHTML = subjectAllocs.map(a => `<tr>
       <td><strong>Class ${esc(a.className)}</strong></td>
       <td>${esc(a.subject)}</td>
       <td><strong>${esc(a.totalMark)}</strong></td>
-      <td class="no-print admin-only" style="${canEdit?'':'display:none'}"><button type="button" class="iconbtn del" title="Delete" onclick="delDoc('subject_allocations','${a.id}')">🗑️</button></td>
+      <td class="no-print admin-only" style="${canEdit?'':'display:none'}"><button type="button" class="iconbtn del" title="Archive" onclick="softArchiveDoc('subject_allocations','${a.id}')">🗑️</button></td>
     </tr>`).join('');
   }catch(e){}
 }
@@ -3118,6 +3158,7 @@ window.saveBatchMarks = async function(){
         className, exam, subject, obtained: Number(inp.value), max, createdAt: new Date().toISOString()
       });
     }
+    await logSecurityAudit('Publish Marks', `${exam} - ${subject} (Class ${className})`);
     showMsg('markMsg', `${inputs.length} വിദ്യാർത്ഥികളുടെ മാർക്കുകൾ സേവ് ചെയ്തു!`, 'success');
     await loadMarks();
     updateDashboard();
@@ -3131,11 +3172,11 @@ async function loadMarks(){
   }catch(e){}
 }
 
-/* --- 3. FEE COLLECTION INTERFACE (MONTH-WISE COLLAPSIBLE + PAYMENT PANEL + SIBLINGS) --- */
+/* --- 3. FEE COLLECTION INTERFACE --- */
 async function loadFees(){
   try{
     const snap = await getDocs(collection(db,'fees'));
-    fees = snap.docs.map(d => ({id:d.id, ...d.data()}));
+    fees = snap.docs.map(d => ({id:d.id, ...d.data()})).filter(x => x.isArchived !== true);
     renderErpStudentWorkspace();
   }catch(e){}
 }
@@ -3278,7 +3319,6 @@ function renderErpStudentWorkspace(){
     </div>
   `;
 
-  // Bus Details (when applicable)
   const classBus = busAssignments.find(ba => String(ba.className) === String(st.className));
   const studentBusFees = managedFees.filter(f => detectFeeGroup(f) === 'Bus');
   if(classBus || studentBusFees.length){
@@ -3330,7 +3370,6 @@ window.renderMonthWiseFeeTable = function(){
     return;
   }
 
-  // Group fees month-wise / period-wise
   const monthOrder = ['June','July','August','September','October','November','December','January','February','March','Annual (June-March)','Term 1','Term 2','Term 3'];
   const groups = {};
   filtered.forEach(f => {
@@ -3454,12 +3493,11 @@ window.clearAllFeeSelections = function(){
   updatePaymentPanelUI();
 };
 
-/* --- NEW PAYMENT PANEL (APPEARS WHEN 1 OR MORE FEES ARE SELECTED) --- */
+/* --- NEW PAYMENT PANEL --- */
 function updatePaymentPanelUI(){
   const panel = $('newPaymentPanel');
   if(!panel) return;
 
-  // Clean up any stale or already-paid IDs
   const validSelected = fees.filter(f => selectedFeeIds.has(f.id) && f.status !== 'Paid');
   selectedFeeIds = new Set(validSelected.map(f => f.id));
 
@@ -3491,7 +3529,7 @@ window.updatePaymentRemainingBalance = function(){
 };
 
 window.submitSelectedFeesPayment = async function(){
-  if(isSubmittingPayment) return; // Prevent accidental duplicate payment submissions
+  if(isSubmittingPayment) return;
   const validSelected = fees.filter(f => selectedFeeIds.has(f.id) && f.status !== 'Paid');
   if(!validSelected.length){
     showMsg('payPanelMsg', 'കുറഞ്ഞത് ഒരു Due Fee എങ്കിലും select ചെയ്യുക.', 'error');
@@ -3521,7 +3559,6 @@ window.submitSelectedFeesPayment = async function(){
   try{
     let remainingBudget = enteredAmount;
     const collector = currentUserName();
-    // Group selected fees by student so each sibling gets their own separate student-wise receipt
     const byStudent = {};
     validSelected.forEach(f => {
       if(!byStudent[f.studentId]) byStudent[f.studentId] = [];
@@ -3542,7 +3579,6 @@ window.submitSelectedFeesPayment = async function(){
         remainingBudget = Number((remainingBudget - allocPay).toFixed(2));
 
         if(allocPay >= itemPayable){
-          // Full payment for this fee row
           await updateDoc(doc(db, 'fees', f.id), {
             status: 'Paid',
             paidAmount: Number(f.paidAmount || 0) + allocPay,
@@ -3566,7 +3602,6 @@ window.submitSelectedFeesPayment = async function(){
             collectedBy: collector
           });
         } else {
-          // Partial payment: mark paid portion & keep remaining balance as Pending due
           const balanceLeft = Number((itemPayable - allocPay).toFixed(2));
           await updateDoc(doc(db, 'fees', f.id), {
             amount: balanceLeft,
@@ -3575,7 +3610,6 @@ window.submitSelectedFeesPayment = async function(){
             remark: remark ? `${remark} (Partial paid ${fmtMoney(allocPay)})` : `Partial paid ${fmtMoney(allocPay)}`,
             updatedAt: new Date().toISOString()
           });
-          // Also save a Paid transaction record for accurate receipt & report history
           const paidRecord = {
             studentId: f.studentId,
             studentName: f.studentName,
@@ -3614,6 +3648,8 @@ window.submitSelectedFeesPayment = async function(){
       }
 
       if(receiptItems.length){
+        const studentPaidSum = receiptItems.reduce((a,b) => a + b.paidNow, 0);
+        await logSecurityAudit('Fee Payment', `Collected ${fmtMoney(studentPaidSum)} from ${stObj.name} (${payMode}, Rcpt #${rcptNo})`);
         generatedReceiptBatch.push({ student: stObj, receiptNo: rcptNo, items: receiptItems });
       }
     }
@@ -3682,7 +3718,6 @@ function displayGeneratedReceiptAtIndex(idx){
   $('rcptTotalBalance').textContent = `${cur()}${totalBal.toFixed(2)}`;
   $('rcptWords').textContent = `Mode: ${first.paymentMode || 'Cash'} • Collected By: ${first.collectedBy || currentUserName()}`;
 
-  // If multiple siblings were paid together, show separate student-wise receipt tabs inside the receipt modal
   const switcher = $('multiSiblingReceiptSwitcher');
   if(generatedReceiptBatch.length > 1){
     switcher.style.display = 'block';
@@ -3735,7 +3770,6 @@ function renderReceiptHistoryTable(){
   const managedIds = getManagedStudentIds();
   const paidItems = fees.filter(f => managedIds.includes(f.studentId) && f.status === 'Paid');
 
-  // Group by Receipt Number + Student
   const grouped = {};
   paidItems.forEach(f => {
     const rNo = f.receiptNo || f.id;
@@ -3816,6 +3850,7 @@ window.submitCreateFeeModal = async function(){
       remark,
       createdAt: new Date().toISOString()
     });
+    await logSecurityAudit('Create Student Fee', `Created ${title} (${fmtMoney(amount)}) for ${st.name}`);
     closeCreateFeeModal();
     await loadFees();
     updateDashboard();
@@ -3915,7 +3950,6 @@ window.toggleActiveSibling = function(sibId, checked){
     if(!activeSiblingIds.includes(sibId)) activeSiblingIds.push(sibId);
   } else {
     activeSiblingIds = activeSiblingIds.filter(id => id !== sibId);
-    // Remove checked fee selections belonging to deselected sibling
     fees.forEach(f => { if(f.studentId === sibId) selectedFeeIds.delete(f.id); });
   }
   renderErpStudentWorkspace();
@@ -3941,7 +3975,7 @@ window.linkNewSiblingFromModal = async function(){
   }
 };
 
-/* --- 4. REPORTS (Daily, Monthly, Student-wise, Class-wise, Due, Cash, Bank) --- */
+/* --- 4. REPORTS --- */
 window.renderFeeReport = function(){
   if(!$('repType')) return;
   const type = $('repType').value;
@@ -4014,7 +4048,8 @@ window.renderFeeReport = function(){
 
 window.exportActiveFeeReportCSV = function(){
   const csv = [activeReportHeaders, ...activeReportRows]
-    .map(r => r.map(v => `"${String(v??'').replace(/"/g,'""')}"`).join(',')).join('\n');
+    .map(r => r.map(v => `"${String(v??'').replace(/"/g,'""')}"`).join(',')).join('
+');
   const blob = new Blob([csv], {type:'text/csv;charset=utf-8;'});
   const a = document.createElement('a');
   a.href = URL.createObjectURL(blob);
@@ -4026,13 +4061,13 @@ window.exportActiveFeeReportCSV = function(){
 async function loadTimetable(){
   try{
     const snap = await getDocs(collection(db,'timetable'));
-    timetable = snap.docs.map(d => ({id:d.id, ...d.data()}));
+    timetable = snap.docs.map(d => ({id:d.id, ...d.data()})).filter(x => x.isArchived !== true);
     const canEdit = activeSession?.role === 'admin' || activeSession?.role === 'office';
     if(!timetable.length){ $('ttRows').innerHTML = '<tr><td colspan="6">No timetable slots added yet.</td></tr>'; return; }
     $('ttRows').innerHTML = timetable.map(t => `<tr>
       <td>Class ${esc(t.className)}</td><td>${esc(t.day)}</td><td>${esc(t.time)}</td>
       <td><strong>${esc(t.subject)}</strong></td><td>${esc(t.teacher||'-')}</td>
-      <td class="no-print admin-only" style="${canEdit?'':'display:none'}"><button type="button" class="iconbtn del" title="Delete" onclick="delDoc('timetable','${t.id}')">🗑️</button></td>
+      <td class="no-print admin-only" style="${canEdit?'':'display:none'}"><button type="button" class="iconbtn del" title="Archive" onclick="softArchiveDoc('timetable','${t.id}')">🗑️</button></td>
     </tr>`).join('');
   }catch(e){}
 }
@@ -4052,13 +4087,13 @@ window.saveTimetable = async function(){
 async function loadNotices(){
   try{
     const snap = await getDocs(collection(db,'notices'));
-    notices = snap.docs.map(d => ({id:d.id, ...d.data()}));
+    notices = snap.docs.map(d => ({id:d.id, ...d.data()})).filter(x => x.isArchived !== true);
     const canEdit = activeSession?.role === 'admin' || activeSession?.role === 'office';
     if(!notices.length){ $('noticeRows').innerHTML = '<tr><td colspan="5">No notices posted yet.</td></tr>'; return; }
     $('noticeRows').innerHTML = notices.map(n => `<tr>
       <td>${esc(n.date)}</td><td><span class="pill blue">${esc(n.category)}</span></td>
       <td><strong>${esc(n.title)}</strong></td><td>${esc(n.body)}</td>
-      <td class="no-print admin-only" style="${canEdit?'':'display:none'}"><button type="button" class="iconbtn del" title="Delete" onclick="delDoc('notices','${n.id}')">🗑️</button></td>
+      <td class="no-print admin-only" style="${canEdit?'':'display:none'}"><button type="button" class="iconbtn del" title="Archive" onclick="softArchiveDoc('notices','${n.id}')">🗑️</button></td>
     </tr>`).join('');
   }catch(e){}
 }
@@ -4068,16 +4103,27 @@ window.saveNotice = async function(){
   if(!title || !body){ showMsg('noticeMsg','Title, Details എന്നിവ നൽകുക.','error'); return; }
   try{
     await addDoc(collection(db,'notices'), {title, body, category, date:todayISO, createdAt:new Date().toISOString()});
+    await logSecurityAudit('Post Notice', `Published notice: ${title}`);
     $('noticeTitle').value=''; $('noticeBody').value='';
     showMsg('noticeMsg','Notice published!','success');
     await loadAll();
   }catch(e){ showMsg('noticeMsg','Error: '+e.message,'error'); }
 };
 
-window.delDoc = async function(col, id){
-  if(!confirm('Delete this record?')) return;
-  await deleteDoc(doc(db, col, id));
-  await loadAll();
+/* --- SOFT DELETE / ARCHIVE HELPER (PREVENTS PERMANENT DATA LOSS) --- */
+window.softArchiveDoc = async function(col, id){
+  if(!confirm('Archive this record safely? (Record will be moved to archive and logged)')) return;
+  try{
+    await updateDoc(doc(db, col, id), {
+      isArchived: true,
+      archivedAt: new Date().toISOString(),
+      archivedBy: currentUserName()
+    });
+    await logSecurityAudit('Archive Record', `Archived item ${id} from ${col}`);
+    await loadAll();
+  }catch(e){
+    alert('Error archiving record: ' + e.message);
+  }
 };
 
 /* --- DASHBOARD UPDATE --- */
@@ -4142,7 +4188,7 @@ function updateDashboard(){
     : '<div class="feed-item">No notifications yet.</div>';
 }
 
-/* --- MANUAL REPORT BUILDER --- */
+/* --- MANUAL REPORT BUILDER & AUDIT LOG --- */
 window.renderManualReport = function(){
   if(!$('manRepType')) return;
   const type = $('manRepType').value, cls = $('manRepClass').value, q = ($('manRepSearch').value || '').toLowerCase().trim();
@@ -4181,12 +4227,13 @@ window.renderManualReport = function(){
     manualRowsData = staffList
       .filter(st => `${st.name} ${st.role} ${st.dept||''} ${st.phone}`.toLowerCase().includes(q))
       .map(st => [st.name, st.role, st.dept||'-', st.phone, st.qual||'-']);
-  } else if(type === 'bus'){
-    $('manRepHeading').textContent = 'Manual Report — Class Bus Assignments';
-    manualHeaders = ['Class', 'Route', 'Stage', 'Rate'];
-    manualRowsData = busAssignments
-      .filter(ba => (!cls || String(ba.className) === String(cls)) && (`${ba.route} ${ba.stage}`.toLowerCase().includes(q)))
-      .map(ba => [ba.className, ba.route, ba.stage, fmtMoney(ba.rate)]);
+  } else if(type === 'audit'){
+    $('manRepHeading').textContent = '🔒 Security Audit Logs';
+    manualHeaders = ['Time', 'User', 'Role', 'Action', 'Details'];
+    manualRowsData = auditLogs
+      .filter(l => `${l.performedBy} ${l.action} ${l.details}`.toLowerCase().includes(q))
+      .slice(0, 100)
+      .map(l => [l.timestamp ? l.timestamp.replace('T',' ').slice(0,19) : l.date, l.performedBy, l.role, l.action, l.details]);
   }
 
   $('manRepHead').innerHTML = '<tr>' + manualHeaders.map(h => `<th>${esc(h)}</th>`).join('') + '</tr>';
@@ -4197,7 +4244,8 @@ window.renderManualReport = function(){
 
 window.exportManualCSV = function(){
   const csv = [manualHeaders, ...manualRowsData]
-    .map(r => r.map(v => `"${String(v??'').replace(/"/g,'""')}"`).join(',')).join('\n');
+    .map(r => r.map(v => `"${String(v??'').replace(/"/g,'""')}"`).join(',')).join('
+');
   const blob = new Blob([csv], {type:'text/csv;charset=utf-8;'});
   const a = document.createElement('a');
   a.href = URL.createObjectURL(blob);
@@ -4221,7 +4269,8 @@ window.exportCSV = function(type){
       rows.push([a.date, a.className, name, st]);
     }));
   }
-  const csv = rows.map(r => r.map(v => `"${String(v??'').replace(/"/g,'""')}"`).join(',')).join('\n');
+  const csv = rows.map(r => r.map(v => `"${String(v??'').replace(/"/g,'""')}"`).join(',')).join('
+');
   const blob = new Blob([csv], {type:'text/csv;charset=utf-8;'});
   const a = document.createElement('a');
   a.href = URL.createObjectURL(blob);
