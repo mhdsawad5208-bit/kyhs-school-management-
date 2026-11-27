@@ -2797,8 +2797,7 @@ window.downloadStudentCsvTemplate = function(){
   ];
   const csv = [headers, ...sampleRows]
     .map(r => r.map(v => `"${String(v ?? '').replace(/"/g, '""')}"`).join(','))
-    .join('
-');
+    .join('\n');
   const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
   const a = document.createElement('a');
   a.href = URL.createObjectURL(blob);
@@ -2818,10 +2817,8 @@ function parseCsvRows(text){
     } else {
       if(ch === '"'){ inQuotes = true; }
       else if(ch === ','){ row.push(cell.trim()); cell = ''; }
-      else if(ch === '' && next === '
-'){ row.push(cell.trim()); rows.push(row); row = []; cell = ''; i++; }
-      else if(ch === '
-' || ch === ''){ row.push(cell.trim()); rows.push(row); row = []; cell = ''; }
+      else if(ch === '\r' && next === '\n'){ row.push(cell.trim()); rows.push(row); row = []; cell = ''; i++; }
+      else if(ch === '\n' || ch === '\r'){ row.push(cell.trim()); rows.push(row); row = []; cell = ''; }
       else { cell += ch; }
     }
   }
@@ -3050,8 +3047,7 @@ window.downloadStudentFile = function(){
     `Mother Name      : ${st.motherName || ''}`,
     `Mobile Number    : ${st.phone || ''}`,
     `Address          : ${st.address || ''}`
-  ].join('
-');
+  ].join('\n');
   const blob = new Blob([content], { type: 'text/plain;charset=utf-8;' });
   const a = document.createElement('a');
   a.href = URL.createObjectURL(blob);
@@ -4299,8 +4295,7 @@ window.renderFeeReport = function(){
 
 window.exportActiveFeeReportCSV = function(){
   const csv = [activeReportHeaders, ...activeReportRows]
-    .map(r => r.map(v => `"${String(v??'').replace(/"/g,'""')}"`).join(',')).join('
-');
+    .map(r => r.map(v => `"${String(v??'').replace(/"/g,'""')}"`).join(',')).join('\n');
   const blob = new Blob([csv], {type:'text/csv;charset=utf-8;'});
   const a = document.createElement('a');
   a.href = URL.createObjectURL(blob);
@@ -4495,8 +4490,7 @@ window.renderManualReport = function(){
 
 window.exportManualCSV = function(){
   const csv = [manualHeaders, ...manualRowsData]
-    .map(r => r.map(v => `"${String(v??'').replace(/"/g,'""')}"`).join(',')).join('
-');
+    .map(r => r.map(v => `"${String(v??'').replace(/"/g,'""')}"`).join(',')).join('\n');
   const blob = new Blob([csv], {type:'text/csv;charset=utf-8;'});
   const a = document.createElement('a');
   a.href = URL.createObjectURL(blob);
@@ -4520,8 +4514,7 @@ window.exportCSV = function(type){
       rows.push([a.date, a.className, name, st]);
     }));
   }
-  const csv = rows.map(r => r.map(v => `"${String(v??'').replace(/"/g,'""')}"`).join(',')).join('
-');
+  const csv = rows.map(r => r.map(v => `"${String(v??'').replace(/"/g,'""')}"`).join(',')).join('\n');
   const blob = new Blob([csv], {type:'text/csv;charset=utf-8;'});
   const a = document.createElement('a');
   a.href = URL.createObjectURL(blob);
